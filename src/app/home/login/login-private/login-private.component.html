@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container"> 
+    <div class="t"><h2>Welkom bij 3-it!</h2></div>
+        <form (ngSubmit)="onSubmit(loginForm.value)" #loginForm="ngForm" class="form">
+                
+            <table class="full-width " cellspacing="0"><tr>
+                <td><mat-form-field class="full-width pad">
+                    <input matInput placeholder="Naam" mat-form-field type="text"  id="lastName" pattern="[a-zA-Z ]*"
+                    required [(ngModel)]="lastName" name="lastName" #lname="ngModel" color="primary">
+                    <mat-error *ngIf="lname.invalid && (lname.dirty || lname.touched)" color="warn">Geef een geldige naam in a.u.b.</mat-error>
+                </mat-form-field></td>
+
+                <td><mat-form-field class="full-width">
+                    <input matInput placeholder="Voornaam" type="text" id="firstName" pattern="[a-zA-Z ]*"
+                    required [(ngModel)]="firstName" name="firstName" #fname="ngModel" color="primary">
+                    <mat-error *ngIf="fname.invalid && (fname.dirty || fname.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
+                </mat-form-field></td>
+            </tr></table>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="E-mail" type="email" id="email"
+                required [(ngModel)]="email" name="email" #mail="ngModel" color="primary">
+                <mat-error *ngIf="mail.invalid && (mail.dirty || mail.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <textarea matInput placeholder="Reden" id="reason"  required 
+                [(ngModel)]="reason" name="reason" #re="ngModel" color="primary"></textarea>
+                <mat-error *ngIf="re.invalid && (re.dirty || re.touched)" color="warn">Geef een reden in a.u.b.</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field class="low-width">
+                <mat-select placeholder="Afspraak met"  id="appointmentWith" required #app="ngModel"
+                [(ngModel)]="appointmentWith" name="appointmentWith" >
+                    <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.name}} {{employee.firstname}}</mat-option> 
+                </mat-select>
+                <mat-error *ngIf="app.invalid && (app.dirty || app.touched)" color="warn">Kies een werknemer a.u.b.</mat-error>
+            </mat-form-field>
+
+            <div class="form-group">
+                <mat-checkbox required [(ngModel)]="cbGDPR" color="primary" id="cbGDPR" name="cbGDPR">Ik ben op de hoogte van de GDPR wetgeving</mat-checkbox>
+                <label></label>
+            </div>
+
+            <button mat-flat-button type="submit" color="primary" class="btn btn-success" [disabled]="!loginForm.form.valid">Submit</button>
+            <button mat-flat-button type="button" class="btn btn-cancel" (click)="cancel()">Cancel</button>
+        </form>
+    </div>
+</body>
+
+</html>

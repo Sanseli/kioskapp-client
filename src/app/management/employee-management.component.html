@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+  <body>
+      <div class="container">
+          <div class="example-container mat-elevation-z8">
+            <div class="search-div">
+                <button mat-raised-button (click)="onCreate()"><mat-icon>add</mat-icon>Create</button>
+                <mat-form-field class="search-form-field" floatLabel="never">
+                  <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+                  <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey" (click)="onSearchClear()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-form-field>
+                <button class="refreshbut" mat-raised-button (click)="loadData()"><mat-icon>cached</mat-icon></button>
+            </div>
+              
+              <mat-table [dataSource]="listData" matSort>
+            
+                <ng-container matColumnDef="id">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+                  <mat-cell *matCellDef="let employee"> {{employee.id}} </mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                  <mat-cell *matCellDef="let employee"> {{employee.name}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="firstname">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Firstname </mat-header-cell>
+                    <mat-cell *matCellDef="let employee"> {{employee.firstname}} </mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef="email">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                  <mat-cell *matCellDef="let employee"> {{employee.email}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <button mat-icon-button><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button color="warn" (click)="deleteEmployee(row)"><mat-icon>delete_outline</mat-icon></button>
+                  </mat-cell>
+                </ng-container>
+                
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
+              </mat-table>
+            </div>
+      </div>
+  </body>
+
+
+

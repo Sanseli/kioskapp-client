@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container"> 
+        <h2>Selecteer wie je wil inloggen</h2>
+
+        <form (ngSubmit)="onSubmit(logoutForm.value)" #logoutForm="ngForm">
+
+            <div class="form-group">
+                <mat-select class="form-control" id="visitor" 
+                    required 
+                    [(ngModel)]="visitor" name="visitor">
+                    <mat-option *ngFor="let visitor of visitors" [value]="visitor">{{visitor.name}}</mat-option> 
+                </mat-select>
+            </div>
+
+            <button mat-flat-button type="submit" color="primary" class="btn btn-success" [disabled]="!logoutForm.form.valid">Submit</button>
+            <button mat-flat-button type="button" class="btn btn-cancel" (click)="cancel()">Cancel</button>
+        </form>
+    </div>
+</body>
+
+</html>
