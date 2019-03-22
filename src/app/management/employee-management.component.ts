@@ -4,42 +4,20 @@ import { Employee } from '../shared/models';
 import { EmployeeService } from '../shared/employee.service';
 import { MatSort, MatTableDataSource, MatDialog, MatDialogConfig, } from '@angular/material';
 import { EmployeeDialogComponent } from './employee-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component ({
     templateUrl: 'employee-management.component.html',
-    styles: [`.example-container {
-      height: 100%;
-      overflow: auto;
-    }
-
-    button {
-      margin: 16px 8px;
-    }
-
-    .search-form-field {
-      width: 70%;
-    }
-
-    .search-div button {
-      margin: 20px;
-    }
-
+    styles: [`.example-container { height: 100%; overflow: auto; }
+    .search-div mat-form-field { width: 90%; }
+    .search-div button { width: 5%; margin-right: 1%; }
+    .search-div { width: 95%; margin-left: 3%; margin-right: 3%; font-size: 14px; }
     .refreshbut { float: right;}
-
+    mat-table { max-height: 550px; overflow: auto;}
+    .back { margin-left: 1%; margin-top: 1%;} 
     `]
 })
 export class EmployeeManagementComponent implements OnInit {
-
-    // //dataSource = this.employees;
-    // dataSource = new MatTableDataSource(this.employees)
-    // name:string
-    // email:string
-
-
-
-    constructor(private emplService: EmployeeService,
-     public dialog: MatDialog) {
-    }
 
     employees: Employee[];
     listData: MatTableDataSource<Employee>;
@@ -47,10 +25,13 @@ export class EmployeeManagementComponent implements OnInit {
     searchKey: string;
 
     @ViewChild(MatSort) sort: MatSort;
-    ngOnInit() {
-      this.loadData();
-      // this.listData.sort = this.sort
 
+    constructor(private emplService: EmployeeService, private router: Router,
+      public dialog: MatDialog, private route: ActivatedRoute) {
+      this.listData = this.route.snapshot.data['employeeList'];
+    }
+
+    ngOnInit() {
     }
 
     loadData() {
@@ -72,7 +53,12 @@ export class EmployeeManagementComponent implements OnInit {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      this.dialog.open(EmployeeDialogComponent, dialogConfig);
+      const dialogRef = this.dialog.open(EmployeeDialogComponent, dialogConfig);
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('dialogref = closed');
+        this.loadData();
+      });
     }
 
     deleteEmployee(employee) {
@@ -81,6 +67,10 @@ export class EmployeeManagementComponent implements OnInit {
         window.confirm(`De werknemer ${employee.name} is nu verwijderd uit de database`);
       }
       console.log(employee);
+    }
+
+    back() {
+      this.router.navigate(['/management']);
     }
 
  }

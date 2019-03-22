@@ -9,7 +9,10 @@
 
 <body>
     <div class="container"> 
-    <div class="t"><h2>Welkom bij 3-it!</h2></div>
+    <div class="t">
+        <h1 class="colorblue">Welkom bij 3-it!</h1>
+        <mat-divider></mat-divider>
+    </div>
         <form (ngSubmit)="onSubmit(loginForm.value)" #loginForm="ngForm" class="form">
                 
             <table class="full-width " cellspacing="0"><tr>
@@ -26,11 +29,19 @@
                 </mat-form-field></td>
             </tr></table>
 
-            <mat-form-field class="full-width">
-                <input matInput placeholder="E-mail" type="email" id="email"
-                required [(ngModel)]="email" name="email" #mail="ngModel" color="primary">
-                <mat-error *ngIf="mail.invalid && (mail.dirty || mail.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
-            </mat-form-field>
+            <table class="full-width " cellspacing="0"><tr>
+                <td><mat-form-field class="full-width pad">
+                    <input matInput placeholder="E-mail" type="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    required [(ngModel)]="email" name="email" #mail="ngModel" color="primary">
+                    <mat-error *ngIf="mail.invalid && (mail.dirty || mail.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
+                </mat-form-field></td>
+
+                <td><mat-form-field class="full-width">
+                    <input matInput placeholder='Telefoon nr.' type="tel" id="phone" pattern="[0-9+()- ]*"
+                    [(ngModel)]="phone" name="phone" #tel="ngModel" color="primary">
+                    <mat-error *ngIf="tel.invalid && (tel.dirty || tel.touched)" color="warn">Geef een geldig telefoon nummer in a.u.b.</mat-error>
+                </mat-form-field></td>
+            </tr></table>
 
             <mat-form-field class="full-width">
                 <textarea matInput placeholder="Reden" id="reason"  required 

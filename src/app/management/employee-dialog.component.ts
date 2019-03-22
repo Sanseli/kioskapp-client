@@ -2,6 +2,7 @@ import { Component, Injectable, OnInit, ViewChild, Inject } from '@angular/core'
 import { EmployeeService } from '../shared/employee.service';
 import { MatDialogRef } from '@angular/material';
 import { Employee } from '../shared';
+import { EmployeeManagementComponent } from './employee-management.component';
 
 @Component ({
     templateUrl: 'employee-dialog.component.html',
@@ -19,21 +20,17 @@ import { Employee } from '../shared';
     }
     `]
 })
-export class EmployeeDialogComponent implements OnInit {
+export class EmployeeDialogComponent {
 
   constructor(private service: EmployeeService, public dialogRef: MatDialogRef<EmployeeDialogComponent>) {
-  }
-
-  ngOnInit() {
-
   }
 
   onSubmit(formValues) {
     if (formValues.firstname != null) {
       this.addEmployee(formValues.name, formValues.email, formValues.firstname);
     } else {this.addWOname(formValues.name, formValues.email); }
-    this.dialogRef.close();
 
+    this.dialogRef.close();
   }
 
   onCancel() {

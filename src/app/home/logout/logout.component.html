@@ -9,15 +9,18 @@
 
 <body>
     <div class="container"> 
-        <h2>Selecteer wie je wil afmelden</h2>
+        <div class="t">
+            <h1 class="colorblue">Selecteer wie je wil afmelden</h1>
+            <mat-divider></mat-divider>
+        </div>
 
         <form (ngSubmit)="onSubmit(logoutForm.value)" #logoutForm="ngForm">
 
             <div class="form-group">
-                <mat-select class="form-control" id="visit" 
+                <mat-select class="form-control" id="visitor" 
                     required 
-                    [(ngModel)]="visit" name="visit">
-                    <mat-option *ngFor="let visit of visits" [value]="visit">{{visit.name}}</mat-option> 
+                    [(ngModel)]="visitor" name="visitor">
+                    <mat-option *ngFor="let visitor of visitors" [value]="visitor">{{visitor.name}}</mat-option> 
                 </mat-select>
             </div>
 

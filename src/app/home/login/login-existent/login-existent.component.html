@@ -9,15 +9,20 @@
 
 <body>
     <div class="container"> 
-        <h2>Selecteer wie je wil inloggen</h2>
+        <div class="t">
+            <h1 class="colorblue">Selecteer wie je wil inloggen</h1>
+            <mat-divider></mat-divider>
+        </div>
 
         <form (ngSubmit)="onSubmit(logoutForm.value)" #logoutForm="ngForm">
 
             <div class="form-group">
-                <mat-select class="form-control" id="visitor" 
+                <mat-select class="form-control" id="appointment" 
                     required 
-                    [(ngModel)]="visitor" name="visitor">
-                    <mat-option *ngFor="let visitor of visitors" [value]="visitor">{{visitor.name}}</mat-option> 
+                    [(ngModel)]="appointment" name="appointment" >
+                    <div>
+                        <mat-option *ngFor="let appointment of appointments" [value]="appointment">{{appointment.name}} {{appointment.firstname}}</mat-option> 
+                    </div>
                 </mat-select>
             </div>
 

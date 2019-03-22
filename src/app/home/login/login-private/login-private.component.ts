@@ -1,51 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { VisitorService } from 'src/app/shared/visitor.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeeService } from 'src/app/shared/employee.service';
-import { Employee, Visitor, Visit } from 'src/app/shared/models';
-import { VisitService } from 'src/app/shared/visit.service';
-import { EmailService } from 'src/app/shared';
-import { DatePipe, formatDate } from '@angular/common';
+import { Employee, Visitor, Appointment} from 'src/app/shared/models';
+import { formatDate } from '@angular/common';
+import { AppointmentService } from 'src/app/shared';
+import { MatSnackBar } from 'src/app/material';
 
 @Component ({
     templateUrl: 'login-private.component.html',
     styleUrls: ['login-private.component.css'],
-    providers: [EmployeeService, VisitorService]
+    providers: [EmployeeService]
 })
-export class LoginPrivateComponent implements OnInit {
+export class LoginPrivateComponent {
   isDirty = true;
-  
-  employees: Employee[] = [];
-  visitors: Visitor[] = [];
-  date: Date;
-  formattedDate: string;
 
-  public form = { email: null};
+  employees: Employee[];
+  appointments: Appointment[] = [];
 
-  constructor(private visitorService: VisitorService,
-    private router: Router, private emplservice: EmployeeService, 
-    private visitService: VisitService, private emailService: EmailService,
-    private datepipe: DatePipe) {
+  constructor(private visitorService: VisitorService, private appointmentService: AppointmentService,
+    private router: Router, private emplservice: EmployeeService, private route: ActivatedRoute,
+    private snackBar: MatSnackBar) {
+    this.employees = this.route.snapshot.data['employeeList'];
   }
 
-  ngOnInit() {
-    this.getEmployees() ;
-    this.getVisitors();
+  openSnackBar() {
+    this.snackBar.open('Login is opgeslagen', '', { panelClass: ['blue-snackbar']});
   }
 
   onSubmit(formValues) {
-    this.formattedDate = formatDate(new Date(), 'yyyy-MM-dd', 'en')
-    console.log(this.formattedDate)
-    this.addVisitor(formValues.lastName, formValues.firstName, formValues.reason, formValues.email, this.formattedDate);
+    const date = new Date();
+    const formattedDate = formatDate(date, 'yyyy-MM-dd', 'en');
+
+    this.addAppointment(formValues.lastName, formValues.firstName, formValues.email,
+      formattedDate, formValues.reason, formValues.appointmentWith.id, formValues.phone);
 
     this.addVisit();
-    window.confirm('Login is opgeslagen.');
+
+  this.openSnackBar();
+    //window.confirm('Login is opgeslagen.');
     this.router.navigate(['/home']);
-
-  }
-
-  handleResponse(res) {
-    this.form.email = null;
   }
 
   cancel() {
@@ -60,37 +54,38 @@ export class LoginPrivateComponent implements OnInit {
     }
   }
 
-  getEmployees(): void {
-    this.emplservice.getEmployees().subscribe(employees => (this.employees = employees));
-    
+  getAppointments(): void {
+    this.appointmentService.getAppointments().subscribe(appointment => (this.appointments = appointment));
+    // setTimeout(() => {
+    //   console.log(this.appointments.length);
+    // }, 1500);
   }
 
-  getVisitors(): void {
-    this.visitorService.getVisitors().subscribe(visitors => (this.visitors = visitors));
-    console.log(this.visitors.length)
-  }
-
-  addVisitor(name: string, firstname: string, reason: string, email: string, day: string): void {
-    const newVisitor: Visitor = {name, firstname, email, reason, day} as Visitor;
-    this.visitorService.addVisitor(newVisitor).subscribe();
+  addAppointment(name: string, firstname: string, email: string, day: string, subject: string, employee_id: number, telnr?: string): void {
+    const newAppointment: Appointment = {name, firstname, email, telnr,  day, subject, employee_id} as Appointment;
+    this.appointmentService.addAppointment(newAppointment).subscribe();
   }
 
   addVisit() {
-    this.visitors = []
-    this.getVisitors();
+    this.appointments = [];
+    this.getAppointments();
 
-    let name: string;
-    let visitor_id: number;
-    let last: Visitor;
+    setTimeout(() => {
+      console.log(this.appointments);
 
-    if (this.visitors.length !== 0) {
-      last = this.visitors[this.visitors.length -1];
-      name =  `${last.name}  ${last.firstname}`
-      visitor_id = last.id;
+      let name: string;
+      let appointment_id: number;
+      let last: Appointment;
 
-      const newVisit: Visit = {visitor_id, name};
-      console.log(newVisit)
-      this.visitService.addVisit(newVisit).subscribe();
-    }
+      if (this.appointments.length !== 0) {
+        last = this.appointments[this.appointments.length - 1];
+        name =  `${last.name}  ${last.firstname}`;
+        appointment_id = last.id;
+
+        const newVisit: Visitor = {appointment_id, name};
+        console.log(newVisit);
+        this.visitorService.addVisitor(newVisit).subscribe();
+      }
+    }, 3000);
   }
 }

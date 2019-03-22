@@ -1,12 +1,14 @@
-export interface Visitor {
+export interface Appointment {
     id?: number;
     name: string;
     firstname: string;
     company?: string;
-    reason?: string;
     email: string;
     telnr?: string;
     day: string;
+    subject?: string;
+    employee_id: number;
+    location?: string;
 }
 
 export interface Employee {
@@ -16,19 +18,9 @@ export interface Employee {
     email: string;
 }
 
-export interface Appointment {
-    id?: number;
-    subject: string;
-    employee_id: BigInteger;
-    visitor_id: BigInteger;
-    start: Date;
-    end?: Date;
-    location?: string;
-}
 
-export interface Visit {
+export interface Visitor {
     id?: number;
-    visitor_id: number;
-    visitor?: Visitor;
+    appointment_id: number;
     name: string;
 }

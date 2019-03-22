@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Visitor } from './models';
 import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 
 
@@ -37,13 +38,23 @@ export class VisitorService {
     getVisitor(id: number): Observable<Visitor[]> {
         return this.http
             .get<Visitor[]>(`api/visitor/${id}`)
-            .pipe(catchError(this.handleError('getVisitor', [])))
+            .pipe(catchError(this.handleError('getVisitor', [])));
     }
 
-    // saveLogin(login){
-    //     login.id = 1
-    //     LOGINS.push(login)
-    // }
+    getVisitorsByDate(day: string): Observable<Visitor[]> {
+        return this.http
+            .get<Visitor[]>(`api/visitors/${day}`)
+            .pipe(catchError(this.handleError('getVisitorByDate', [])));
+    }
 }
 
-// const LOGINS:ILogin[] = []
+@Injectable()
+export class VisitorResolverService implements Resolve<Visitor[]> {
+
+    constructor(private visitorService: VisitorService) {}
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Visitor[]> {
+        return this.visitorService.getVisitors();
+    }
+
+}

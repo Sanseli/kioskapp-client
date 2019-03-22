@@ -8,13 +8,33 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdunitService } from './adunit.service';
 import { MaterialModule } from './material/material.module';
-import { HomeComponent, LoginComponent, LoginCompanyComponent, VisitorService, LoginPrivateComponent, ManagementComponent,
-  LogoutComponent, EmployeeService, NavBarComponent, EmployeeDialogComponent, CalendarComponent, LoginDialogComponent,
-  EmployeeManagementComponent, AppointmentDialogComponent, VisitService, EmailService, LoginExistentComponent
+import {
+  HomeComponent,
+  LoginComponent,
+  LoginCompanyComponent,
+  VisitorService,
+  LoginPrivateComponent,
+  ManagementComponent,
+  LogoutComponent,
+  EmployeeService,
+  NavBarComponent,
+  EmployeeDialogComponent,
+  CalendarComponent,
+  LoginDialogComponent,
+  EmployeeManagementComponent,
+  AppointmentDialogComponent,
+  EmailService,
+  LoginExistentComponent,
+  AppointmentService,
+  EmployeeResolverService,
+  AppointmentResolverService,
+  VisitorResolverService,
+  VisitorDialogComponent,
   } from './index';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from './material';
 
 
 @NgModule({
@@ -32,7 +52,8 @@ import { DatePipe } from '@angular/common'
     LoginDialogComponent,
     EmployeeManagementComponent,
     AppointmentDialogComponent,
-    LoginExistentComponent
+    LoginExistentComponent,
+    VisitorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,15 +69,20 @@ import { DatePipe } from '@angular/common'
     EmployeeService,
     MessageService,
     HttpErrorHandler,
-    VisitService,
     EmailService,
-    DatePipe
+    AppointmentService,
+    DatePipe,
+    EmployeeResolverService,
+    AppointmentResolverService,
+    VisitorResolverService,
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2000}}
   ],
   bootstrap: [AppComponent],
   entryComponents: [
     EmployeeDialogComponent,
     LoginDialogComponent,
-    AppointmentDialogComponent
+    AppointmentDialogComponent,
+    VisitorDialogComponent,
   ]
 })
 export class AppModule { }

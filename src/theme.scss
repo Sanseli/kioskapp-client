@@ -8,3 +8,7 @@ $my-app-warn: mat-palette($mat-red, 900);
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 
 @include angular-material-theme($my-app-theme);
+
+.blue-snackbar { background: #D4CC4C !important; color:#6F6F6F; font-size: 30px; font-weight: 500;}
+
+.colorblue {  color: #5d6fa0; }

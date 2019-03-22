@@ -1,41 +1,53 @@
-import { Injectable } from '@angular/core'
-import { Employee } from './models';
-import { HttpClient } from '@angular/common/http'
-import { HttpErrorHandler, HandleError } from 'src/app/http-error-handler.service'
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators'
+import { catchError } from 'rxjs/operators';
+import { HandleError, HttpErrorHandler } from 'src/app/http-error-handler.service';
+import { Employee } from './models';
 
 @Injectable()
 export class EmployeeService {
-    private handleError: HandleError
+    private handleError: HandleError;
 
     constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
-        this.handleError = httpErrorHandler.createHandleError('EmployeeService')
+        this.handleError = httpErrorHandler.createHandleError('EmployeeService');
     }
 
     getEmployees(): Observable<Employee[]> {
         return this.http
         .get<Employee[]>('api/employees')
-        .pipe(catchError(this.handleError('getEmployees', [])))
+        .pipe(catchError(this.handleError('getEmployees', [])));
     }
 
     addEmployee(employee: Employee): Observable<Employee> {
         return this.http
             .post<Employee>('api/employee', employee)
-            .pipe(catchError(this.handleError('addEmployee', employee)))
+            .pipe(catchError(this.handleError('addEmployee', employee)));
     }
 
     deleteEmployee(id: number): Observable<{}> {
-        const url = `api/employee/${id}`
+        const url = `api/employee/${id}`;
         return this.http
             .delete(url)
-            .pipe(catchError(this.handleError('deleteEmployee')))
+            .pipe(catchError(this.handleError('deleteEmployee')));
     }
 
     updateEmployee(employee: Employee): Observable<Employee> {
         return this.http
             .put<Employee>(`api/employee/${employee.id}`, employee)
-            .pipe(catchError(this.handleError('updateEmployee', employee)))
+            .pipe(catchError(this.handleError('updateEmployee', employee)));
     }
 }
 
+
+@Injectable()
+export class EmployeeResolverService implements Resolve<Employee[]> {
+
+    constructor(private employeeService: EmployeeService) {}
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Employee[]> {
+        return this.employeeService.getEmployees();
+    }
+
+}
