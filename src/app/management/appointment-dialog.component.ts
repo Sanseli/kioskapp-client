@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { EmployeeService, Employee, VisitorService, Visitor, Appointment, AppointmentService } from '../shared';
-import { MatDialogRef } from '../material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { EmployeeService, Employee, VisitorService, Visitor } from '../shared';
+import { MatDialogRef, MAT_DIALOG_DATA } from '../material';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 
 @Component ({
     templateUrl: 'appointment-dialog.component.html',
@@ -16,46 +15,30 @@ export class AppointmentDialogComponent implements OnInit {
     visitors: Visitor[];
 
     constructor(private employeeService: EmployeeService, private visitorService: VisitorService,
-        private appointmentService: AppointmentService, private dialogRef: MatDialogRef<AppointmentDialogComponent>,
+        private dialogRef: MatDialogRef<AppointmentDialogComponent>,  @Inject(MAT_DIALOG_DATA) public data: any,
         private route: ActivatedRoute ) {
+            this.employees = data.comp.employees;
+            console.log();
         }
 
     ngOnInit(): void {
         this.minDate = new Date();
-        this.getEmployees();
-        this.getVisitors();
-    }
-
-    getEmployees(): void {
-        this.employeeService.getEmployees().subscribe(employees => (this.employees = employees));
     }
 
     onSubmit(formValues) {
-        // if (formValues.companyVisitor != null) {
-            this.newAppointment(formValues.nameVisitor, formValues.firstnameVisitor, formValues.emailVisitor,
-                formatDate(formValues.date, 'yyyy-MM-dd', 'en'), formValues.employee.id, formValues.subject, formValues.companyVisitor,
-                formValues.location);
-        // } else {
-          //  this.newAppointment(formValues.nameVisitor, formValues.firstnameVisitor, formValues.emailVisitor,
-            //    formatDate(formValues.date, 'yyyy-MM-dd', 'en'), formValues.startHour, formValues.endHour, formValues.subject,
-            // formValues.employee.id, formValues.location);
-        // };
+        this.newVisitor(formValues.nameVisitor, formValues.firstnameVisitor, formValues.emailVisitor,
+            formatDate(formValues.date, 'yyyy-MM-dd', 'en'), formValues.employee.id, formValues.subject,
+            false, formValues.companyVisitor, formValues.telVisitor,
+            formValues.location);
 
         this.dialogRef.close();
     }
 
-    newAppointment(name: string, firstname: string, email: string, day: string, employee_id: number, subject: string, company?: string,
-        location?: string) {
-        const newAppointment: Appointment = {name, firstname, email, company, day, subject, employee_id,
-            location} as Appointment;
-        this.appointmentService.addAppointment(newAppointment).subscribe();
+    newVisitor(name: string, firstname: string, email: string, day: string, employee_id: number, subject: string,
+        loggedIn: boolean, company?: string, telnr?: string,  location?: string) {
+        const newVisitor: Visitor = {name, firstname, email, company, day, subject, employee_id,
+            location, telnr,  loggedIn} as Visitor;
+        this.visitorService.addVisitor(newVisitor).subscribe();
     }
-
-    getVisitors(): void {
-        this.visitorService.getVisitors().subscribe(visitors => (this.visitors = visitors));
-        setTimeout(() => {
-          console.log(this.visitors.length);
-        }, 1000);
-      }
 
 }

@@ -17,11 +17,11 @@
         <form (ngSubmit)="onSubmit(logoutForm.value)" #logoutForm="ngForm">
 
             <div class="form-group">
-                <mat-select class="form-control" id="appointment" 
+                <mat-select class="form-control" id="visitor" 
                     required 
-                    [(ngModel)]="appointment" name="appointment" >
+                    [(ngModel)]="visitor" name="visitor" >
                     <div>
-                        <mat-option *ngFor="let appointment of appointments" [value]="appointment">{{appointment.name}} {{appointment.firstname}}</mat-option> 
+                        <mat-option *ngFor="let visitor of visitors" [value]="visitor">{{visitor.name}} {{visitor.firstname}}</mat-option> 
                     </div>
                 </mat-select>
             </div>

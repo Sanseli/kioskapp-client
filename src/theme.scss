@@ -12,3 +12,7 @@ $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 .blue-snackbar { background: #D4CC4C !important; color:#6F6F6F; font-size: 30px; font-weight: 500;}
 
 .colorblue {  color: #5d6fa0; }
+
+  button:focus { 
+    outline: none !important; 
+}

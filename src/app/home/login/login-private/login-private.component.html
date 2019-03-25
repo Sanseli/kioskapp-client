@@ -28,7 +28,7 @@
                     <mat-error *ngIf="fname.invalid && (fname.dirty || fname.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
                 </mat-form-field></td>
             </tr></table>
-
+            
             <table class="full-width " cellspacing="0"><tr>
                 <td><mat-form-field class="full-width pad">
                     <input matInput placeholder="E-mail" type="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
@@ -37,7 +37,7 @@
                 </mat-form-field></td>
 
                 <td><mat-form-field class="full-width">
-                    <input matInput placeholder='Telefoon nr.' type="tel" id="phone" pattern="[0-9+()- ]*"
+                    <input matInput placeholder='Telefoon nr.' type="tel" id="phone" pattern="[0-9 ]*"
                     [(ngModel)]="phone" name="phone" #tel="ngModel" color="primary">
                     <mat-error *ngIf="tel.invalid && (tel.dirty || tel.touched)" color="warn">Geef een geldig telefoon nummer in a.u.b.</mat-error>
                 </mat-form-field></td>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { VisitorService, AppointmentService, Appointment, Visitor } from 'src/app/shared';
+import { VisitorService, Visitor } from 'src/app/shared';
 import { Router, ActivatedRoute } from '@angular/router';
-import { formatDate } from '@angular/common'
+import { formatDate } from '@angular/common';
 
 @Component ({
     templateUrl: 'login-existent.component.html',
@@ -14,32 +14,22 @@ import { formatDate } from '@angular/common'
     `]
 })
 export class LoginExistentComponent {
-    appointments: Appointment[];
-    visitors: Visitor[] = [];
-    loaded: boolean;
+    visitors: Visitor[];
 
     constructor(private visitorService: VisitorService, private router: Router, 
         private route: ActivatedRoute) {
-            this.appointments = this.route.snapshot.data['appointmentList'];
-            this.visitors = this.route.snapshot.data['visitorList'];
+            const formattedDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+            this.visitors = this.route.snapshot.data['visitorList'].filter(a => (a.loggedIn === 0 && a.day === formattedDate));
+            console.log(this.visitors)
     }
 
 
     onSubmit(formValues) {
-        const app: Appointment = formValues.appointment;
-        const name = `${app.name} ${app.firstname}`;
-        this.addVisit(app.id, name);
+        const app: Visitor = formValues.visitor;
+        app.loggedIn = true;
+        console.log(app);
+        this.visitorService.updateVisitor(app).subscribe();
         this.router.navigate(['/home']);
-    }
-
-    addVisit(appointment_id: number, name: string) {
-        const newVisitor: Visitor = {appointment_id, name} as Visitor;
-        if (this.visitors.some(x => (x.appointment_id === appointment_id))) {
-            console.log('al ingelogd')
-        } else {
-            this.visitorService.addVisitor(newVisitor).subscribe();
-        }
-
     }
 
     cancel() {

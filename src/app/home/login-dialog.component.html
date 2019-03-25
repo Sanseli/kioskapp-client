@@ -1,13 +1,16 @@
 <div class="container">
+    <div class="close">
+        <button mat-icon-button><mat-icon>close</mat-icon></button>
+    </div>
     <div class="t">
         <h1 class="colorblue">Heeft u al een afspraak?</h1>
     </div>
     <div class="button-row">
         <div class="btn-left">
-            <button mat-raised-button color="primary" (click)="clickYes()">Ja </button>
+            <button mat-raised-button color="primary" (click)="clickNo()">Nee</button>
         </div>
         <div class="btn-right">
-            <button mat-raised-button color="primary" (click)="clickNo()">Nee</button>
+            <button mat-raised-button color="primary" (click)="clickYes()">Ja </button>
         </div>
     </div>
 </div>

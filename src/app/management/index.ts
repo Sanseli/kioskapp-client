@@ -3,4 +3,4 @@ export * from './employee-management.component';
 export * from './calendar.component';
 export * from './management.component';
 export * from './appointment-dialog.component';
-export * from './visitor-dialog.component';
+export * from './visitor-info-dialog.component';

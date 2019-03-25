@@ -1,5 +1,5 @@
 <div class="container">
-    <form (ngSubmit)="onSubmit(appointmentForm.value)" #appointmentForm="ngForm">
+    <form (ngSubmit)="onSubmit(visitorForm.value)" #visitorForm="ngForm">
 
         <mat-horizontal-stepper #stepper linear="true">
 
@@ -8,13 +8,13 @@
                 <ng-template matStepLabel>Onderwerp</ng-template>
 
                 <mat-form-field class="full-width">
-                    <input matInput required placeholder="Reden" type="text" id="subject" pattern="[a-zA-Z]*"
+                    <input matInput required placeholder="Reden" type="text" id="subject"
                     [(ngModel)]="subject" name="subject">
                 </mat-form-field>
                 <mat-form-field class="full-width">
                     <mat-select required placeholder="Werknemer" id="employee"
                     [(ngModel)]="employee" name="employee">
-                        <mat-option *ngFor="let employee of employees" [value]="employee">
+                        <mat-option *ngFor="let employee of data.comp.employees" [value]="employee">
                             {{employee.name}} {{employee.firstname}}
                         </mat-option>
                     </mat-select>
@@ -41,8 +41,13 @@
                     [(ngModel)]="companyVisitor" name="companyVisitor">
                 </mat-form-field>
 
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="E-mail" id="emailVisitor"
+                <mat-form-field class="half-width pad">
+                    <input matInput placeholder="TelNr" id="telVisitor"
+                    [(ngModel)]="telVisitor" name="telVisitor">
+                </mat-form-field>
+
+                <mat-form-field class="half-width">
+                    <input matInput required placeholder="E-mail" id="emailVisitor"
                     [(ngModel)]="emailVisitor" name="emailVisitor">
                 </mat-form-field>
 
@@ -58,16 +63,6 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-            
-                    <!-- <mat-form-field class="low-width pad"> 
-                        <input matInput type="time" min="8:00" max="18:00" required id="startHour"
-                        [(ngModel)]="startHour" name="startHour" placeholder="Van">
-                    </mat-form-field>
-            
-                    <mat-form-field class="low-width">
-                        <input matInput type="time" [min]="startHour" max="18:00" id="endHour"
-                        [(ngModel)]="endHour" name="endHour" placeholder="Tot">
-                    </mat-form-field> -->
         
                     <mat-form-field class="full-width">
                         <input matInput placeholder="Plaats" id="location"

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Visitor, Appointment } from 'src/app/shared/models';
+import { Visitor } from 'src/app/shared/models';
 import { VisitorService } from 'src/app/shared/visitor.service';
-import { AppointmentService } from 'src/app/shared';
 
 @Component ({
     templateUrl: 'logout.component.html',
@@ -18,17 +17,22 @@ import { AppointmentService } from 'src/app/shared';
 
 })
 export class LogoutComponent {
-    appointments: Appointment[] = [];
     visitors: Visitor[] = [];
 
     constructor(private router: Router, private route: ActivatedRoute,
-        private appointmentService: AppointmentService, private visitorService: VisitorService) {
-        this.visitors = this.route.snapshot.data['visitorList'];
+        private visitorService: VisitorService) {
+        // this.visitors = this.route.snapshot.data['visitorList'];
+        this.visitors = this.route.snapshot.data['visitorList'].filter(a => (a.loggedIn === 1));
+        console.log(this.visitors);
     }
 
     onSubmit(formValues) {
-       this.deleteVisit(formValues.visitor);
-       this.router.navigate(['/home']);
+        const visitor = formValues.visitor;
+        visitor.loggedIn = false;
+        console.log(visitor);
+        console.log(this.visitorService.updateVisitor(visitor).subscribe());
+        // this.deleteVisit(formValues.visitor);
+        this.router.navigate(['/home']);
     }
 
     cancel() {

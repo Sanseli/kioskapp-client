@@ -10,7 +10,7 @@ import {
     EmployeeManagementComponent,
     LoginExistentComponent
 } from './index';
-import { EmployeeResolverService, VisitorResolverService, AppointmentResolverService } from './shared';
+import { EmployeeResolverService, VisitorResolverService } from './shared';
 
 export const appRoutes: Routes = [
     {
@@ -44,7 +44,7 @@ export const appRoutes: Routes = [
     {
         path: 'management',
         component: ManagementComponent,
-        resolve: { appointmentList: AppointmentResolverService, EmployeeList: EmployeeResolverService }
+        resolve: { visitorList: VisitorResolverService, employeeList: EmployeeResolverService }
     },
     {
         path: 'calendar',
@@ -58,6 +58,6 @@ export const appRoutes: Routes = [
     {
         path: 'login/existent',
         component: LoginExistentComponent,
-        resolve: { appointmentList: AppointmentResolverService, visitorList: VisitorResolverService }
+        resolve: { visitorList: VisitorResolverService }
     }
 ];

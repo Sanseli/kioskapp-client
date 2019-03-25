@@ -20,6 +20,12 @@ export class EmployeeService {
         .pipe(catchError(this.handleError('getEmployees', [])));
     }
 
+    getEmployee(id: number): Observable<Employee[]> {
+        return this.http
+        .get<Employee[]>(`api/employee/${id}`)
+        .pipe(catchError(this.handleError('getEmployee', [])));
+    }
+
     addEmployee(employee: Employee): Observable<Employee> {
         return this.http
             .post<Employee>('api/employee', employee)

@@ -20,7 +20,7 @@
                 <mat-select class="form-control" id="visitor" 
                     required 
                     [(ngModel)]="visitor" name="visitor">
-                    <mat-option *ngFor="let visitor of visitors" [value]="visitor">{{visitor.name}}</mat-option> 
+                    <mat-option *ngFor="let visitor of visitors" [value]="visitor">{{visitor.name}} {{visitor.firstname}}</mat-option> 
                 </mat-select>
             </div>
 

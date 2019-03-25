@@ -12,7 +12,6 @@ import {
   HomeComponent,
   LoginComponent,
   LoginCompanyComponent,
-  VisitorService,
   LoginPrivateComponent,
   ManagementComponent,
   LogoutComponent,
@@ -25,11 +24,10 @@ import {
   AppointmentDialogComponent,
   EmailService,
   LoginExistentComponent,
-  AppointmentService,
+  VisitorService,
   EmployeeResolverService,
-  AppointmentResolverService,
   VisitorResolverService,
-  VisitorDialogComponent,
+  VisitorInfoDialogComponent,
   } from './index';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
@@ -51,9 +49,9 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from './material';
     CalendarComponent,
     LoginDialogComponent,
     EmployeeManagementComponent,
-    AppointmentDialogComponent,
+    VisitorInfoDialogComponent,
     LoginExistentComponent,
-    VisitorDialogComponent
+    AppointmentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -70,10 +68,9 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from './material';
     MessageService,
     HttpErrorHandler,
     EmailService,
-    AppointmentService,
+    VisitorService,
     DatePipe,
     EmployeeResolverService,
-    AppointmentResolverService,
     VisitorResolverService,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2000}}
   ],
@@ -82,7 +79,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from './material';
     EmployeeDialogComponent,
     LoginDialogComponent,
     AppointmentDialogComponent,
-    VisitorDialogComponent,
+    VisitorInfoDialogComponent,
   ]
 })
 export class AppModule { }

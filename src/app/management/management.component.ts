@@ -1,12 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialogConfig, MatDialog, MatTableDataSource, MatPaginator, MatSort } from '../material';
+import { MatDialogConfig, MatDialog, MatTableDataSource, MatPaginator, MatSort, Sort } from '../material';
 import { AppointmentDialogComponent } from './appointment-dialog.component';
-import { Visitor, Appointment } from '../shared/models';
+import { Visitor,  Employee } from '../shared/models';
 import { formatDate } from '@angular/common';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
-import { AppointmentService } from '../shared';
-import { VisitorDialogComponent } from './visitor-dialog.component';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { VisitorService, EmployeeService } from '../shared';
+import { VisitorInfoDialogComponent } from './visitor-info-dialog.component';
 
 @Component({
     templateUrl: 'management.component.html',
@@ -28,46 +28,51 @@ import { VisitorDialogComponent } from './visitor-dialog.component';
     `]
 })
 export class ManagementComponent {
-    appointments: Appointment[];
+    visitors: Visitor[];
+    employees: Employee[];
+    visitorWith: Employee;
     visitorsperDay: Visitor[];
-    listData: MatTableDataSource<Appointment>;
-    displayedColumns = ['name', 'firstname', 'company', 'subject', 'actions'];
+    listData: MatTableDataSource<Visitor>;
+    displayedColumns = [ 'loggedIn', 'name', 'firstname', 'company', 'subject', 'actions'];
     searchKey = '';
     events: string[] = [];
     day: Date;
+    visitor: Visitor;
+
+
 
 
     @ViewChild(MatSort) sort: MatSort;
 
     constructor(private router: Router, public dialog: MatDialog, private route: ActivatedRoute,
-        private appointmentService: AppointmentService) {
+        private visitorService: VisitorService, private employeeService: EmployeeService) {
+        this.visitors = this.route.snapshot.data['visitorList'];
+        this.employees = this.route.snapshot.data['employeeList'];
         this.loadData();
     }
 
+
     loadData() {
-        if (this.appointments != null) {
-            this.appointmentService.getAppointments().subscribe(appointments => (this.appointments = appointments));
-        } else {
-            console.log(this.appointments = this.route.snapshot.data['appointmentList']);
+        if (this.visitors != null) {
+            this.visitorService.getVisitors().subscribe(visitors => (this.visitors = visitors));
         }
 
         setTimeout(() => {
             this.day = new Date();
             const formattedDate = formatDate(this.day, 'yyyy-MM-dd', 'en');
 
-            console.log(this.listData = new MatTableDataSource(this.appointments.filter(function(visitor) {
+            this.listData = new MatTableDataSource(this.visitors.filter(function(visitor) {
                 return visitor.day === formattedDate;
-            })));
+            }));
         }, 1000);
-        
+
     }
 
     addEvent(type: Date, event: MatDatepickerInputEvent<Date>) {
         const date = formatDate(event.value, 'yyyy-MM-dd', 'en');
-        console.log(date);
-        console.log(this.listData = new MatTableDataSource(this.appointments.filter(function(visitor) {
+        this.listData = new MatTableDataSource(this.visitors.filter(function(visitor) {
             return visitor.day === date;
-        })));
+        }));
     }
 
     toEmployees() {
@@ -75,13 +80,16 @@ export class ManagementComponent {
     }
 
     newAppointment() {
+        const componentData: any = { visitors: this.visitors, employees: this.employees };
+
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
-        const dialogRef = this.dialog.open(AppointmentDialogComponent, { data: { route: this.route }});
+        const dialogRef = this.dialog.open(AppointmentDialogComponent, { data: { comp: componentData }});
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('dialogref = closed');
-            this.loadData();
+            setTimeout(() => {
+                this.loadData();
+            }, 700);
         });
     }
 
@@ -99,7 +107,24 @@ export class ManagementComponent {
     }
 
     info(visitor: Visitor) {
-        console.log(visitor);
-        const dialogRef = this.dialog.open(VisitorDialogComponent, {data: visitor});
+        this.visitor = visitor;
+        this.visitorWith = this.employees.find(x => (x.id === this.visitor.employee_id));
+
+        setTimeout(() => {
+            const componentData: any = { visitor: this.visitor, employee: this.visitorWith };
+
+            const dialogRef = this.dialog.open(VisitorInfoDialogComponent, { width: '600px', data: { comp: componentData }
+            });
+        }, 500);
+    }
+
+    logout(visitor: Visitor) {
+        if (window.confirm('Bezoeker ' + visitor.name + ' ' + visitor.firstname + ' uitloggen?')) {
+            visitor.loggedIn = false;
+            this.visitorService.updateVisitor(visitor).subscribe();
+            setTimeout(() => {
+                this.loadData();
+            }, 500);
+        }
     }
 }

@@ -35,7 +35,14 @@
         </div>
     
         <div class="table-responsive" flex layout="row">
-            <mat-table [dataSource]="listData" matSort >
+            <mat-table [dataSource]="listData" matSort>
+
+                <ng-container matColumnDef="loggedIn">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let visitor"><button mat-icon-button *ngIf="visitor.loggedIn" (click)="logout(visitor)">
+                        <mat-icon>person</mat-icon>
+                    </button></mat-cell>
+                </ng-container>
 
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header> Naam</mat-header-cell>

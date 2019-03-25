@@ -46,6 +46,12 @@ export class VisitorService {
             .get<Visitor[]>(`api/visitors/${day}`)
             .pipe(catchError(this.handleError('getVisitorByDate', [])));
     }
+
+    updateVisitor(visitor: Visitor): Observable<Visitor> {
+        return this.http
+            .put<Visitor>(`api/visitor/${visitor.id}`, visitor)
+            .pipe(catchError(this.handleError('updateVisitor', visitor)));
+    }
 }
 
 @Injectable()
