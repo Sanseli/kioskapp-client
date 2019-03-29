@@ -1,0 +1,15 @@
+.example-container { height: 100%; overflow: auto; }
+
+.search-div mat-form-field { width: 90%; }
+
+.search-div button { width: 5%; margin-right: 1%; }
+
+.search-div { width: 95%; margin-left: 3%; margin-right: 3%; font-size: 14px; }
+
+.refreshbut { float: right; }
+
+mat-table { max-height: 550px; overflow: auto; }
+
+.back { margin-left: 1%; margin-top: 1%; } 
+
+.example-container, button, mat-table { background-color: #fafafaf1; }

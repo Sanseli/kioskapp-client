@@ -39,8 +39,9 @@
 
                 <ng-container matColumnDef="loggedIn">
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                    <mat-cell *matCellDef="let visitor"><button mat-icon-button *ngIf="visitor.loggedIn" (click)="logout(visitor)">
-                        <mat-icon>person</mat-icon>
+                    <mat-cell *matCellDef="let visitor"><button mat-icon-button  (click)="logInOut(visitor)">
+                        <mat-icon *ngIf="visitor.loggedIn">person</mat-icon>
+                        <mat-icon *ngIf="!visitor.loggedIn">person_outline</mat-icon>
                     </button></mat-cell>
                 </ng-container>
 

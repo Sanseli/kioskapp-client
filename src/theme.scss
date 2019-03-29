@@ -16,3 +16,35 @@ $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
   button:focus { 
     outline: none !important; 
 }
+
+body {
+  overflow: hidden;
+  height: 100%;
+  background-image: url("./assets/1.png"); 
+  background-size: cover ;
+  background-repeat: no-repeat;
+  background-color: grey;
+}
+
+html {
+  margin: 0;
+  height: 100%;
+}
+
+background-image {
+  margin-right: 10%;
+}
+
+mat-dialog-container.mat-dialog-container { background-color: #fafafafa; overflow-y: hidden !important; }
+
+
+.custom-dialog-container .mat-dialog-container {
+  overflow-y: hidden;
+}
+
+.cdk-global-scrollblock {
+  overflow-y: hidden;
+}
+
+
+

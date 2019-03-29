@@ -4,7 +4,8 @@ import { EmployeeService } from 'src/app/shared/employee.service';
 import { Employee, Visitor} from 'src/app/shared/models';
 import { formatDate } from '@angular/common';
 import { VisitorService } from 'src/app/shared';
-import { MatSnackBar } from 'src/app/material';
+import { MatSnackBar, MatDialogConfig, MatDialog } from 'src/app/material';
+import { DialogComponent } from 'src/app/shared/dialog-component/dialog.component';
 
 @Component ({
     templateUrl: 'login-private.component.html',
@@ -19,7 +20,7 @@ export class LoginPrivateComponent {
 
   constructor(private visitorService: VisitorService,
     private router: Router, private emplservice: EmployeeService, private route: ActivatedRoute,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar, private dialog: MatDialog ) {
     this.employees = this.route.snapshot.data['employeeList'];
   }
 
@@ -40,15 +41,11 @@ export class LoginPrivateComponent {
   }
 
   cancel() {
-    if (window.confirm('Weet u zeker dat u de pagina wilt verlaten?')) {
-      this.router.navigate(['/home']);
-    }
-  }
+    this.openDialog('Weet u zeker dat u de pagina wilt verlaten?');
 
-  toHome() {
-    if (window.confirm('Weet u zeker dat u de pagina wilt verlaten?')) {
-      this.router.navigate(['/home']);
-    }
+    // if (window.confirm('Weet u zeker dat u de pagina wilt verlaten?')) {
+    //   this.router.navigate(['/home']);
+    // }
   }
 
   getVisitors(): void {
@@ -62,4 +59,21 @@ export class LoginPrivateComponent {
     this.visitorService.addVisitor(newVisitor).subscribe();
   }
 
+  openDialog(mes: string) {
+    let dialogres = '';
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { message: mes };
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+        dialogres = `${result}`;
+
+        if (dialogres === 'yes') {
+            this.router.navigate(['/home']);
+        }
+    });
+}
 }

@@ -19,3 +19,5 @@
 .low-width {
   width: 30%;
 }
+
+.container { padding: 20px 50px; background-color: #fafafaf1; }

@@ -1,31 +1,17 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialogConfig, MatDialog, MatTableDataSource, MatPaginator, MatSort, Sort } from '../material';
-import { AppointmentDialogComponent } from './appointment-dialog.component';
+import { AppointmentDialogComponent } from './appointment-dialog/appointment-dialog.component';
 import { Visitor,  Employee } from '../shared/models';
 import { formatDate } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { VisitorService, EmployeeService } from '../shared';
-import { VisitorInfoDialogComponent } from './visitor-info-dialog.component';
+import { VisitorInfoDialogComponent } from './visitor-info-dialog/visitor-info-dialog.component';
+import { DialogComponent } from '../shared/dialog-component/dialog.component';
 
 @Component({
     templateUrl: 'management.component.html',
-    styles: [`
-    mat-form-field.filter {
-        font-size: 14px;
-        width: 80%;
-    }
-    mat-form-field.filterDate {
-        font-size: 14px;
-        width: 20%
-    }
-    mat-table { width: 100%;}
-    .buttons { width: 100%, float: right;}
-    mat-menu { width: 500px}
-    .sort { margin-left: 3%; margin-right: 3%;}
-    mat-table { max-height: 550px; overflow: auto;}
-    .menu { margin-left: 1%; margin-top: 1%;}
-    `]
+    styleUrls: [`management.component.css`]
 })
 export class ManagementComponent {
     visitors: Visitor[];
@@ -38,9 +24,6 @@ export class ManagementComponent {
     events: string[] = [];
     day: Date;
     visitor: Visitor;
-
-
-
 
     @ViewChild(MatSort) sort: MatSort;
 
@@ -118,13 +101,38 @@ export class ManagementComponent {
         }, 500);
     }
 
-    logout(visitor: Visitor) {
-        if (window.confirm('Bezoeker ' + visitor.name + ' ' + visitor.firstname + ' uitloggen?')) {
-            visitor.loggedIn = false;
-            this.visitorService.updateVisitor(visitor).subscribe();
-            setTimeout(() => {
-                this.loadData();
-            }, 500);
+    logInOut(visitor: Visitor) {
+        let message = '';
+        let dialogres = '';
+
+        if (visitor.loggedIn) {
+            message = `Bezoeker ${visitor.name} ${visitor.firstname} uitloggen?`;
+        } else {
+            message = `Bezoeker ${visitor.name} ${visitor.firstname} inloggen?`;
         }
+
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = { message: message };
+        const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    
+        dialogRef.afterClosed().subscribe(result => {
+            dialogres = `${result}`;
+    
+            if (dialogres === 'yes') {
+                
+                if (visitor.loggedIn) {
+                    visitor.loggedIn = false;
+                } else {
+                    visitor.loggedIn = true;
+                }
+
+                this.visitorService.updateVisitor(visitor).subscribe();
+                setTimeout(() => {
+                    this.loadData();
+                }, 500);
+            }
+        });
     }
 }

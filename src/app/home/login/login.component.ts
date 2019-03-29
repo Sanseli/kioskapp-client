@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
     templateUrl: 'login.component.html',
     styles: [`
         .row button { padding: 10% 15% 10% 15%; font-size: 200%;
-        width: 350px; margin-top: 5%}
+        width: 350px; margin-top: 1%}
 
         body {
             overflow-x: hidden;
@@ -13,9 +13,9 @@ import { Router } from '@angular/router';
         }
 
         .img-responsive {
-            max-width: 50%;-
-            max-height: 50%;
-            padding-top: 5%
+            max-width: 55%;-
+            max-height: 55%;
+            padding-top: 1%
           }
     `]
 })

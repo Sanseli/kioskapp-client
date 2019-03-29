@@ -6,7 +6,6 @@ import {
     LoginPrivateComponent,
     LogoutComponent,
     ManagementComponent,
-    CalendarComponent,
     EmployeeManagementComponent,
     LoginExistentComponent
 } from './index';
@@ -45,10 +44,6 @@ export const appRoutes: Routes = [
         path: 'management',
         component: ManagementComponent,
         resolve: { visitorList: VisitorResolverService, employeeList: EmployeeResolverService }
-    },
-    {
-        path: 'calendar',
-        component: CalendarComponent
     },
     {
         path: 'management/employee',

@@ -23,3 +23,8 @@
 .low-width {
   width: 30%;
 }
+
+mat-horizontal-stepper { background-color: #fafafafa; }
+
+button { float: right; }
+

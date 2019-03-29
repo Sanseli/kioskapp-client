@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '../material';
-import { Visitor, Employee,  } from '../shared/models';
-import { EmployeeService } from '../shared';
+import { MatDialogRef, MAT_DIALOG_DATA } from '../../material';
+import { Visitor, Employee,  } from '../../shared/models';
+import { EmployeeService } from '../../shared';
 
 @Component ({
     templateUrl: 'visitor-info-dialog.component.html',

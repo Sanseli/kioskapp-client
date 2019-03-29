@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { EmployeeService, Employee, VisitorService, Visitor } from '../shared';
-import { MatDialogRef, MAT_DIALOG_DATA } from '../material';
+import { EmployeeService, Employee, VisitorService, Visitor } from '../../shared';
+import { MatDialogRef, MAT_DIALOG_DATA } from '../../material';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 

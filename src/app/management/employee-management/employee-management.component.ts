@@ -1,21 +1,16 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Employee } from '../shared/models';
-import { EmployeeService } from '../shared/employee.service';
-import { MatSort, MatTableDataSource, MatDialog, MatDialogConfig, } from '@angular/material';
-import { EmployeeDialogComponent } from './employee-dialog.component';
+import { Employee } from '../../shared/models';
+import { EmployeeService } from '../../shared/employee.service';
+import { MatSort, MatTableDataSource, MatDialog, MatDialogConfig, MatDialogRef, } from '@angular/material';
+import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EmployeeEditDialogComponent } from '../employee-edit-dialog/employee-edit-dialog.component';
+import { DialogComponent } from 'src/app/shared/dialog-component/dialog.component';
 
 @Component ({
     templateUrl: 'employee-management.component.html',
-    styles: [`.example-container { height: 100%; overflow: auto; }
-    .search-div mat-form-field { width: 90%; }
-    .search-div button { width: 5%; margin-right: 1%; }
-    .search-div { width: 95%; margin-left: 3%; margin-right: 3%; font-size: 14px; }
-    .refreshbut { float: right;}
-    mat-table { max-height: 550px; overflow: auto;}
-    .back { margin-left: 1%; margin-top: 1%;} 
-    `]
+    styleUrls: [`employee-management.component.css`]
 })
 export class EmployeeManagementComponent implements OnInit {
 
@@ -61,18 +56,40 @@ export class EmployeeManagementComponent implements OnInit {
       });
     }
 
+    editEmployee(employee) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = { employee: employee };
+      const dialogRef = this.dialog.open(EmployeeEditDialogComponent, dialogConfig);
+    }
+
     deleteEmployee(employee) {
-      if (this.emplService.deleteEmployee(employee.id).subscribe()) {
-        this.loadData();
-        window.confirm(`De werknemer ${employee.name} is nu verwijderd uit de database`);
-      }
-      console.log(employee);
+      let dialogres = '';
+
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.data = { message: `Weet u zeker dat u ${employee.firstname} ${employee.name} wilt verwijderen uit de database?` };
+      const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+      dialogRef.afterClosed().subscribe(result => {
+          dialogres = `${result}`;
+
+          if (dialogres === 'yes') {
+            if (this.emplService.deleteEmployee(employee.id).subscribe()) {
+              this.loadData();
+            }
+          }
+      });
     }
 
     back() {
       this.router.navigate(['/management']);
     }
 
+    openDialog(mes: string) {
+
+    }
  }
 
 

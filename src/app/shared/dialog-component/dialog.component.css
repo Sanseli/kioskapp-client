@@ -1,0 +1,15 @@
+.t { margin-bottom: 30px; display: block;}
+
+a { font-size: 130%; width: 100%; }
+
+.container {padding: 20px 50px; width: 500px;}
+
+button { margin: 1px; }
+
+.btn-left {  float: right;}
+
+.btn-right { float: right;}
+
+.close {  display: block; width: 100%;}
+
+.close button { float: right; }

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialogConfig, MatDialog } from '../material';
-import { LoginDialogComponent } from './login-dialog.component';
+import { DialogComponent } from '../shared/dialog-component/dialog.component';
 
 @Component ({
     templateUrl: 'home.component.html',
     styles: [`
-        .row button { padding: 10% 15% 10% 15%; font-size: 200%;
-        width: 350px; margin-top: 5%}
+    .row button { padding: 10% 15% 10% 15%; font-size: 200%;
+        width: 350px; margin-top: 1%}
 
         body {
             overflow-x: hidden;
@@ -15,10 +15,11 @@ import { LoginDialogComponent } from './login-dialog.component';
         }
 
         .img-responsive {
-            max-width: 50%;-
-            max-height: 50%;
-            padding-top: 5%
+            max-width: 55%;-
+            max-height: 55%;
+            padding-top: 1%
           }
+
     `]
 })
 export class HomeComponent implements OnInit {
@@ -31,10 +32,27 @@ export class HomeComponent implements OnInit {
     }
 
     toLogin() {
+        let dialogres = '';
+
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        this.dialog.open(LoginDialogComponent, dialogConfig);
+        // dialogConfig.disableClose = true;
+        // dialogConfig.autoFocus = true;
+        dialogConfig.data = { message: 'Hebt u al een afspraak?' };
+        const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(result => {
+            dialogres = `${result}`;
+
+            if (dialogres === 'yes') {
+                this.router.navigate(['/login/existent']);
+            } else if (dialogres === 'no') {
+                this.router.navigate(['/login']);
+            } else {
+                console.log(dialogres);
+            }
+        });
+
+
         // this.router.navigate(['/login'])
     }
 
@@ -42,5 +60,6 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/logout']);
     }
 
+    
 
 }

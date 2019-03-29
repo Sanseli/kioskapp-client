@@ -18,8 +18,7 @@ import {
   EmployeeService,
   NavBarComponent,
   EmployeeDialogComponent,
-  CalendarComponent,
-  LoginDialogComponent,
+  DialogComponent,
   EmployeeManagementComponent,
   AppointmentDialogComponent,
   EmailService,
@@ -28,12 +27,13 @@ import {
   EmployeeResolverService,
   VisitorResolverService,
   VisitorInfoDialogComponent,
+  EmployeeEditDialogComponent
   } from './index';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 import { DatePipe } from '@angular/common';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from './material';
-
+import 'hammerjs';
 
 @NgModule({
   declarations: [
@@ -46,12 +46,12 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from './material';
     NavBarComponent,
     ManagementComponent,
     EmployeeDialogComponent,
-    CalendarComponent,
-    LoginDialogComponent,
+    DialogComponent,
     EmployeeManagementComponent,
     VisitorInfoDialogComponent,
     LoginExistentComponent,
-    AppointmentDialogComponent
+    AppointmentDialogComponent,
+    EmployeeEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -77,9 +77,10 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from './material';
   bootstrap: [AppComponent],
   entryComponents: [
     EmployeeDialogComponent,
-    LoginDialogComponent,
+    DialogComponent,
     AppointmentDialogComponent,
     VisitorInfoDialogComponent,
+    EmployeeEditDialogComponent
   ]
 })
 export class AppModule { }
