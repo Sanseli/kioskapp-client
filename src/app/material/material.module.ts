@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-    BrowserAnimationsModule, MatCheckboxModule, MatButtonModule, MatInputModule, MatAutocompleteModule, MatDatepickerModule,
+    MatCheckboxModule, MatButtonModule, MatInputModule, MatAutocompleteModule, MatDatepickerModule,
     MatFormFieldModule, MatRadioModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, MatMenuModule, MatSidenavModule,
     MatToolbarModule, MatListModule, MatGridListModule, MatCardModule, MatStepperModule, MatTabsModule, MatExpansionModule,
     MatButtonToggleModule, MatChipsModule, MatIconModule, MatProgressSpinnerModule, MatProgressBarModule, MatDialogModule,
@@ -11,7 +11,6 @@ import {
         imports:
         [
             CommonModule,
-            BrowserAnimationsModule,
             MatCheckboxModule,
             MatButtonModule,
             MatInputModule,
@@ -47,7 +46,6 @@ import {
         ],
     exports:
         [
-            BrowserAnimationsModule,
             MatCheckboxModule,
             MatButtonModule,
             MatInputModule,

@@ -22,12 +22,10 @@ import { DialogComponent } from '../shared/dialog-component/dialog.component';
 
     `]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+    loading = true;
+
     constructor(private router: Router, public dialog: MatDialog) {
-
-    }
-
-    ngOnInit() {
 
     }
 
@@ -60,6 +58,8 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/logout']);
     }
 
-    
+    onLoad() {
+        this.loading = false;
+    }
 
 }

@@ -1,61 +1,76 @@
 <div class="container">
     <form (ngSubmit)="onSubmit(visitorForm.value)" #visitorForm="ngForm">
 
-        <mat-horizontal-stepper #stepper linear="true">
+        <mat-horizontal-stepper #stepper [linear]="isLinear">
 
-            <mat-step>
+            <mat-step [stepControl]="firstFormGroup">
 
-                <ng-template matStepLabel>Onderwerp</ng-template>
+                <div class="mat-step">
+                    <ng-template matStepLabel>Onderwerp</ng-template>
 
-                <mat-form-field class="full-width">
-                    <input matInput required placeholder="Reden" type="text" id="subject"
-                    [(ngModel)]="subject" name="subject">
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <mat-select required placeholder="Werknemer" id="employee"
-                    [(ngModel)]="employee" name="employee">
-                        <mat-option *ngFor="let employee of data.comp.employees" [value]="employee">
-                            {{employee.name}} {{employee.firstname}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput required placeholder="Reden" type="text" id="subject"
+                        [(ngModel)]="subject" name="subject">
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-select required placeholder="Werknemer" id="employee"
+                        [(ngModel)]="employee" name="employee">
+                            <mat-option *ngFor="let employee of data.comp.employees" [value]="employee">
+                                {{employee.name}} {{employee.firstname}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <button mat-icon-button matStepperNext class="arrright"><mat-icon>keyboard_arrow_right</mat-icon></button>
+                </div>
+
+            </mat-step >
+
+            <mat-step [stepControl]="secondFormGroup">
+
+                <div class="mat-step">
+                    <ng-template matStepLabel>Bezoeker</ng-template>
+
+                    <mat-form-field class="half-width pad" >
+                        <input matInput required placeholder="Naam" id="nameVisitor"
+                        [(ngModel)]="nameVisitor" name="nameVisitor">
+                    </mat-form-field>
+            
+                    <mat-form-field class="half-width">
+                        <input matInput required placeholder="Voornaam" id="firstnameVisitor"
+                        [(ngModel)]="firstnameVisitor" name="firstnameVisitor">
+                    </mat-form-field>
+            
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Bedrijf" id="companyVisitor"
+                        [(ngModel)]="companyVisitor" name="companyVisitor">
+                    </mat-form-field>
+    
+                    <mat-form-field class="half-width pad">
+                        <input matInput placeholder="TelNr" id="telVisitor"
+                        [(ngModel)]="telVisitor" name="telVisitor">
+                    </mat-form-field>
+    
+                    <mat-form-field class="half-width">
+                        <input matInput required placeholder="E-mail" id="emailVisitor"
+                        [(ngModel)]="emailVisitor" name="emailVisitor">
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <button mat-icon-button matStepperNext class="arrright"><mat-icon>keyboard_arrow_right</mat-icon></button>
+                    <button mat-icon-button matStepperPrevious class="arrleft"><mat-icon>keyboard_arrow_left</mat-icon></button>
+                </div>
 
             </mat-step>
 
-            <mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
 
-                <ng-template matStepLabel>Bezoeker</ng-template>
+                <div class="mat-step">
 
-                <mat-form-field class="half-width pad" >
-                    <input matInput required placeholder="Naam" id="nameVisitor"
-                    [(ngModel)]="nameVisitor" name="nameVisitor">
-                </mat-form-field>
-        
-                <mat-form-field class="half-width">
-                    <input matInput required placeholder="Voornaam" id="firstnameVisitor"
-                    [(ngModel)]="firstnameVisitor" name="firstnameVisitor">
-                </mat-form-field>
-        
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Bedrijf" id="companyVisitor"
-                    [(ngModel)]="companyVisitor" name="companyVisitor">
-                </mat-form-field>
-
-                <mat-form-field class="half-width pad">
-                    <input matInput placeholder="TelNr" id="telVisitor"
-                    [(ngModel)]="telVisitor" name="telVisitor">
-                </mat-form-field>
-
-                <mat-form-field class="half-width">
-                    <input matInput required placeholder="E-mail" id="emailVisitor"
-                    [(ngModel)]="emailVisitor" name="emailVisitor">
-                </mat-form-field>
-
-            </mat-step>
-
-            <mat-step>
-
-                <ng-template matStepLabel>Datum, tijd & locatie</ng-template>
+                    <ng-template matStepLabel>Datum & locatie</ng-template>
 
                     <mat-form-field class="low-width pad">
                         <input matInput required [min]="minDate" [matDatepicker]="picker" placeholder="Datum"
@@ -68,7 +83,12 @@
                         <input matInput placeholder="Plaats" id="location"
                         [(ngModel)]="location" name="location">
                     </mat-form-field>
+                </div>
                 
+                <div>
+                    <button mat-icon-button matStepperPrevious class="arrleft"><mat-icon>keyboard_arrow_left</mat-icon></button>
+                </div>
+
             </mat-step>
 
         </mat-horizontal-stepper>

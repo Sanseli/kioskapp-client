@@ -9,7 +9,17 @@ $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 
 @include angular-material-theme($my-app-theme);
 
-.blue-snackbar { background: #D4CC4C !important; color:#6F6F6F; font-size: 30px; font-weight: 500;}
+.blue-snackbar { background: #D4CC4C !important; color:rgb(44, 44, 44);
+}
+
+.mat-simple-snackbar {
+  display: flex; 
+  font-size: 16px !important; // 28px  is double, 42px for triple
+  min-height: 40px !important; // 70px for double, 90px for triple
+  align-items: center !important;
+  justify-content: center !important;
+}
+
 
 .colorblue {  color: #5d6fa0; }
 
@@ -46,5 +56,12 @@ mat-dialog-container.mat-dialog-container { background-color: #fafafafa; overflo
   overflow-y: hidden;
 }
 
+.toastrclass {
+top: 90px;
+right: 2px;
 
+}
 
+md-toast.md-success-toast-theme {
+  background-color: blue;
+}

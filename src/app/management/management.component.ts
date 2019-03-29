@@ -67,7 +67,10 @@ export class ManagementComponent {
 
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
-        const dialogRef = this.dialog.open(AppointmentDialogComponent, { data: { comp: componentData }});
+
+        
+        dialogConfig.data =  { comp: componentData };
+        const dialogRef = this.dialog.open(AppointmentDialogComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe(result => {
             setTimeout(() => {

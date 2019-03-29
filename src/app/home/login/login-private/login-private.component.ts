@@ -4,7 +4,7 @@ import { EmployeeService } from 'src/app/shared/employee.service';
 import { Employee, Visitor} from 'src/app/shared/models';
 import { formatDate } from '@angular/common';
 import { VisitorService } from 'src/app/shared';
-import { MatSnackBar, MatDialogConfig, MatDialog } from 'src/app/material';
+import { MatSnackBar, MatDialogConfig, MatDialog, MatSnackBarConfig } from 'src/app/material';
 import { DialogComponent } from 'src/app/shared/dialog-component/dialog.component';
 
 @Component ({
@@ -25,7 +25,7 @@ export class LoginPrivateComponent {
   }
 
   openSnackBar() {
-    this.snackBar.open('Login is opgeslagen', '', { panelClass: ['blue-snackbar']});
+    this.snackBar.open('Login is opgeslagen', '', { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
   }
 
   onSubmit(formValues) {
@@ -42,10 +42,6 @@ export class LoginPrivateComponent {
 
   cancel() {
     this.openDialog('Weet u zeker dat u de pagina wilt verlaten?');
-
-    // if (window.confirm('Weet u zeker dat u de pagina wilt verlaten?')) {
-    //   this.router.navigate(['/home']);
-    // }
   }
 
   getVisitors(): void {
@@ -75,5 +71,5 @@ export class LoginPrivateComponent {
             this.router.navigate(['/home']);
         }
     });
-}
+  }
 }

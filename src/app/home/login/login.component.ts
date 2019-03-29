@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
     public type: string;
+    loading = true;
 
     constructor(private router: Router) {
 
@@ -36,5 +37,9 @@ export class LoginComponent {
 
     toHome() {
         this.router.navigate(['/home']);
+    }
+
+    onLoad() {
+        this.loading = false;
     }
 }

@@ -24,33 +24,26 @@ export class LoginCompanyComponent {
   }
 
   openSnackBar() {
-    this.snackBar.open('Login is opgeslagen', '', { panelClass: ['blue-snackbar']});
+    this.snackBar.open('Login is opgeslagen', '', { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
   }
 
   onSubmit(formValues) {
     const date = new Date();
     const formattedDate = formatDate(date, 'yyyy-MM-dd', 'en');
 
-    this.addVisitor(formValues.lastName, formValues.firstName, formValues.email, true, formValues.company,
+    const a = this.addVisitor(formValues.lastName, formValues.firstName, formValues.email, true, formValues.company,
        formattedDate, formValues.reason, formValues.appointmentWith.id, formValues.phone);
+       console.log(a);
     this.openSnackBar();
     this.router.navigate(['/home']);
   }
 
   cancel() {
     this.openDialog('Weet u zeker dat u de pagina wilt verlaten?');
-    
-    // if (window.confirm('Weet u zeker dat u de pagina wilt verlaten?')) {
-    //     this.router.navigate(['/home']);
-    // }
   }
 
   toHome() {
     this.openDialog('Weet u zeker dat u de pagina wilt verlaten?');
-
-    // if (window.confirm('Weet u zeker dat u de pagina wilt verlaten?')) {
-    //   this.router.navigate(['/home']) ;
-    // }
   }
 
   getVisitors(): void {
@@ -60,7 +53,7 @@ export class LoginCompanyComponent {
   addVisitor(name: string, firstname: string,  email: string, loggedIn: boolean, company: string,
       day: string, subject: string, employee_id: number, telnr?: string): void {
     const newVisitor: Visitor = {name, firstname, email, telnr, company, day, subject, employee_id, loggedIn} as Visitor;
-    this.visitorService.addVisitor(newVisitor).subscribe();
+    this.visitorService.addVisitor(newVisitor);
   }
 
   openDialog(mes: string) {

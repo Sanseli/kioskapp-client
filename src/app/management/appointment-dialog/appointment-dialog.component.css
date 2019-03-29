@@ -26,5 +26,10 @@
 
 mat-horizontal-stepper { background-color: #fafafafa; }
 
+.mat-step{ height: 200px;}
+
 button { float: right; }
+
+.arrleft { float: left; }
+.arrright { float: right; }
 

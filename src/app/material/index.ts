@@ -1,5 +1,4 @@
 //export * from '../material/material.module'
-export * from '@angular/platform-browser/animations';
 export * from '@angular/material';
 export * from '@angular/material/input';
 export * from '@angular/material/autocomplete';

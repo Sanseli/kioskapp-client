@@ -3,7 +3,7 @@ import { VisitorService, Visitor } from 'src/app/shared';
 import { Router, ActivatedRoute } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { DialogComponent } from 'src/app/shared/dialog-component/dialog.component';
-import { MatDialog, MatDialogConfig } from 'src/app/material';
+import { MatDialog, MatDialogConfig, MatSnackBar } from 'src/app/material';
 
 @Component ({
     templateUrl: 'login-existent.component.html',
@@ -13,7 +13,7 @@ export class LoginExistentComponent {
     visitors: Visitor[];
 
     constructor(private visitorService: VisitorService, private router: Router, 
-        private route: ActivatedRoute, private dialog: MatDialog) {
+        private route: ActivatedRoute, private dialog: MatDialog, private snackBar: MatSnackBar) {
             const formattedDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
             this.visitors = this.route.snapshot.data['visitorList'].filter(a => (a.loggedIn === 0 && a.day === formattedDate));
             console.log(this.visitors)
@@ -25,6 +25,8 @@ export class LoginExistentComponent {
         app.loggedIn = true;
         console.log(app);
         this.visitorService.updateVisitor(app).subscribe();
+        this.snackBar.open('Login is opgeslagen', '', { panelClass: ['blue-snackbar'], 
+        verticalPosition: 'top', horizontalPosition: 'center'});
         this.router.navigate(['/home']);
     }
 

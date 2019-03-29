@@ -3,7 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Visitor } from 'src/app/shared/models';
 import { VisitorService } from 'src/app/shared/visitor.service';
 import { DialogComponent } from 'src/app/shared/dialog-component/dialog.component';
-import { MatDialog, MatDialogConfig } from 'src/app/material';
+import { MatDialog, MatDialogConfig, MatSnackBar } from 'src/app/material';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component ({
     templateUrl: 'logout.component.html',
@@ -13,10 +15,12 @@ export class LogoutComponent {
     visitors: Visitor[] = [];
 
     constructor(private router: Router, private route: ActivatedRoute,
-        private visitorService: VisitorService, private dialog: MatDialog) {
-        // this.visitors = this.route.snapshot.data['visitorList'];
+        private visitorService: VisitorService, private dialog: MatDialog,
+        private toastr: ToastrService, private snackBar: MatSnackBar ) {
         this.visitors = this.route.snapshot.data['visitorList'].filter(a => (a.loggedIn === 1));
         console.log(this.visitors);
+        
+
     }
 
     onSubmit(formValues) {
@@ -24,23 +28,18 @@ export class LogoutComponent {
         visitor.loggedIn = false;
         console.log(visitor);
         console.log(this.visitorService.updateVisitor(visitor).subscribe());
+        this.snackBar.open('Bedankt voor uw bezoek, u bent nu uitgelogd.', '', { panelClass: ['blue-snackbar'], 
+        verticalPosition: 'top', horizontalPosition: 'center'});
         // this.deleteVisit(formValues.visitor);
         this.router.navigate(['/home']);
     }
 
     cancel() {
         this.openDialog('Weet u zeker dat u de pagina wilt verlaten?');
-
-        // if (window.confirm('Weet u zeker dat u de pagina wilt verlaten?')) {
-        //     this.router.navigate(['/home']);
-        // }
     }
 
     toHome() {
         this.openDialog('Weet u zeker dat u de pagina wilt verlaten?');
-        // if (window.confirm('Weet u zeker dat u de pagina wilt verlaten?')) {
-        //     this.router.navigate(['/home']);
-        // }
     }
 
     deleteVisit(visitor): void {
@@ -64,5 +63,9 @@ export class LogoutComponent {
                 this.router.navigate(['/home']);
             }
         });
+    }
+
+    showToaster() {
+        this.toastr.success('Bedankt voor uw bezoek, u bent nu uitgelogd.', 'Succes', {positionClass: 'toastrclass'});
     }
 }

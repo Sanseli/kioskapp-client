@@ -42,13 +42,7 @@ export const appRoutes: Routes = [
     },
     {
         path: 'management',
-        component: ManagementComponent,
-        resolve: { visitorList: VisitorResolverService, employeeList: EmployeeResolverService }
-    },
-    {
-        path: 'management/employee',
-        component: EmployeeManagementComponent,
-        resolve: { employeeList: EmployeeResolverService }
+        loadChildren: './management/management.module#ManagementModule',
     },
     {
         path: 'login/existent',

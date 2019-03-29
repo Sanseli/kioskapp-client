@@ -13,6 +13,7 @@ export class AppointmentDialogComponent implements OnInit {
     minDate: any;
     employees: Employee[];
     visitors: Visitor[];
+    isLinear = true;
 
     constructor(private employeeService: EmployeeService, private visitorService: VisitorService,
         private dialogRef: MatDialogRef<AppointmentDialogComponent>,  @Inject(MAT_DIALOG_DATA) public data: any,

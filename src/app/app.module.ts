@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
@@ -33,6 +34,7 @@ import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 import { DatePipe } from '@angular/common';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from './material';
+import { ToastrModule } from 'ngx-toastr';
 import 'hammerjs';
 
 @NgModule({
@@ -44,14 +46,14 @@ import 'hammerjs';
     LoginPrivateComponent,
     LogoutComponent,
     NavBarComponent,
-    ManagementComponent,
-    EmployeeDialogComponent,
+    // ManagementComponent,
+    // EmployeeDialogComponent,
     DialogComponent,
-    EmployeeManagementComponent,
-    VisitorInfoDialogComponent,
+    // EmployeeManagementComponent,
+    // VisitorInfoDialogComponent,
     LoginExistentComponent,
-    AppointmentDialogComponent,
-    EmployeeEditDialogComponent
+    // AppointmentDialogComponent,
+    // EmployeeEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,9 @@ import 'hammerjs';
     NgbModule,
     FormsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
     ],
   providers: [
     VisitorService,
@@ -76,11 +80,11 @@ import 'hammerjs';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    EmployeeDialogComponent,
+    // EmployeeDialogComponent,
     DialogComponent,
-    AppointmentDialogComponent,
-    VisitorInfoDialogComponent,
-    EmployeeEditDialogComponent
+    // AppointmentDialogComponent,
+    // VisitorInfoDialogComponent,
+    // EmployeeEditDialogComponent
   ]
 })
 export class AppModule { }
