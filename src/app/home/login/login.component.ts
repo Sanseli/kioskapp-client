@@ -15,7 +15,8 @@ import { Router } from '@angular/router';
         .img-responsive {
             max-width: 55%;-
             max-height: 55%;
-            padding-top: 1%
+            padding-top: 1%;
+            margin-bottom: 7%
           }
     `]
 })
