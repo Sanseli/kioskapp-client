@@ -1,9 +1,9 @@
 mat-form-field.filter {
     font-size: 14px;
-    width: 80%;
+    width: 75%;
 }
 
-mat-form-field.filterDate { font-size: 14px; width: 20%; }
+mat-form-field.filterDate { font-size: 14px; width: 15%; }
 
 mat-table { width: 100%; }
 

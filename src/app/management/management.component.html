@@ -1,21 +1,11 @@
-<!-- <!DOCTYPE html>
-<html lang="nl">
-
-<head>
-    <meta charset="utf-8">
-    <title>Home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head> -->
-
 <body>
     <div class="container">
 
     <div class="example-container mat-elevation-z8">
 
-        <div >
+        <div>
             <button mat-button [matMenuTriggerFor]="menu" class="menu"><mat-icon>menu</mat-icon></button>
+
             <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="toEmployees()">Werknemers</button>
                 <button mat-menu-item (click)="newAppointment()">Nieuwe afspraak</button>
@@ -26,12 +16,33 @@
             <mat-form-field class="filter">
                     <input matInput [(ngModel)]="searchKey" (keyup)="applyFilter()" placeholder="Filter" class="filter" >
             </mat-form-field>
+
             <mat-form-field class="filterDate">
                 <input matInput [matDatepicker]="picker" class="filterDate"
                     (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
             </mat-form-field>
+
+            <button mat-button [matMenuTriggerFor]="download" class="menu"><mat-icon>get_app</mat-icon></button>
+    
+            <mat-menu #download="matMenu">
+                <button mat-menu-item (click)="downloadPDF('loggedIn')">Aanwezig</button>
+                <button mat-menu-item [matMenuTriggerFor]="allVisitors">Alle bezoekers</button>
+            </mat-menu>
+
+            <mat-menu #allVisitors="matMenu">
+                <button mat-menu-item (click)="downloadPDF('day')">Dag</button>
+                <button mat-menu-item (click)="downloadPDF('week')">Week</button>
+                <button mat-menu-item (click)="downloadPDF('month')">Maand</button>
+            </mat-menu>
+
+            <mat-menu #loggedIn="matMenu">
+                <button mat-menu-item (click)="downloadPDF('loggedIn')">PDF</button>
+                <button mat-menu-item (click)="downloadExcel('loggedIn')">Excel</button>
+            </mat-menu>
+
+
         </div>
     
         <div class="table-responsive" flex layout="row">
@@ -91,11 +102,6 @@
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
 
             </mat-table>
-
-            <!-- <div class="buttons">
-                <button mat-raised-button (click)="previousDay()" ><mat-icon>keyboard_arrow_left</mat-icon></button>
-                <button mat-raised-button (click)="nextDay()" ><mat-icon>keyboard_arrow_right</mat-icon></button>
-            </div> -->
 
         </div>
     </div>

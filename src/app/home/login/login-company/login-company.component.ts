@@ -29,11 +29,10 @@ export class LoginCompanyComponent {
 
   onSubmit(formValues) {
     const date = new Date();
-    const formattedDate = formatDate(date, 'yyyy-MM-dd', 'en');
+    const formattedDate = formatDate(date, 'dd-MM-yyyy', 'en');
 
-    const a = this.addVisitor(formValues.lastName, formValues.firstName, formValues.email, true, formValues.company,
+    this.addVisitor(formValues.lastName, formValues.firstName, formValues.email, true, formValues.company,
        formattedDate, formValues.reason, formValues.appointmentWith.id, formValues.phone);
-       console.log(a);
     this.openSnackBar();
     this.router.navigate(['/home']);
   }
@@ -53,7 +52,8 @@ export class LoginCompanyComponent {
   addVisitor(name: string, firstname: string,  email: string, loggedIn: boolean, company: string,
       day: string, subject: string, employee_id: number, telnr?: string): void {
     const newVisitor: Visitor = {name, firstname, email, telnr, company, day, subject, employee_id, loggedIn} as Visitor;
-    this.visitorService.addVisitor(newVisitor);
+    console.log(newVisitor)
+    this.visitorService.addVisitor(newVisitor).subscribe();
   }
 
   openDialog(mes: string) {

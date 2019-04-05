@@ -14,7 +14,7 @@ export class LoginExistentComponent {
 
     constructor(private visitorService: VisitorService, private router: Router, 
         private route: ActivatedRoute, private dialog: MatDialog, private snackBar: MatSnackBar) {
-            const formattedDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+            const formattedDate = formatDate(new Date(), 'dd-MM-yyyy', 'en');
             this.visitors = this.route.snapshot.data['visitorList'].filter(a => (a.loggedIn === 0 && a.day === formattedDate));
             console.log(this.visitors)
     }

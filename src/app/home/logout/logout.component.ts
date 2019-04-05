@@ -5,6 +5,7 @@ import { VisitorService } from 'src/app/shared/visitor.service';
 import { DialogComponent } from 'src/app/shared/dialog-component/dialog.component';
 import { MatDialog, MatDialogConfig, MatSnackBar } from 'src/app/material';
 import { ToastrService } from 'ngx-toastr';
+import { formatDate } from '@angular/common';
 
 
 @Component ({
@@ -17,7 +18,9 @@ export class LogoutComponent {
     constructor(private router: Router, private route: ActivatedRoute,
         private visitorService: VisitorService, private dialog: MatDialog,
         private toastr: ToastrService, private snackBar: MatSnackBar ) {
-        this.visitors = this.route.snapshot.data['visitorList'].filter(a => (a.loggedIn === 1));
+        const d = formatDate(new Date, 'dd-MM-yyyy', 'en')
+        console.log(d)
+        this.visitors = this.route.snapshot.data['visitorList'].filter(a => (a.loggedIn === 1 && a.day === d));
         console.log(this.visitors);
         
 

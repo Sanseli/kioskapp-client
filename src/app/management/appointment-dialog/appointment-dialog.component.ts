@@ -28,7 +28,7 @@ export class AppointmentDialogComponent implements OnInit {
 
     onSubmit(formValues) {
         this.newVisitor(formValues.nameVisitor, formValues.firstnameVisitor, formValues.emailVisitor,
-            formatDate(formValues.date, 'yyyy-MM-dd', 'en'), formValues.employee.id, formValues.subject,
+            formatDate(formValues.date, 'dd-MM-yyyy', 'en'), formValues.employee.id, formValues.subject,
             false, formValues.companyVisitor, formValues.telVisitor,
             formValues.location);
 

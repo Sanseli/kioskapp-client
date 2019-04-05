@@ -30,7 +30,7 @@ export class LoginPrivateComponent {
 
   onSubmit(formValues) {
     const date = new Date();
-    const formattedDate = formatDate(date, 'yyyy-MM-dd', 'en');
+    const formattedDate = formatDate(date, 'dd-MM-yyyy', 'en');
 
     this.addVisitor(formValues.lastName, formValues.firstName, formValues.email,
       formattedDate, formValues.reason, formValues.appointmentWith.id, true, formValues.phone);
