@@ -1,0 +1,109 @@
+<body>
+    <div class="container">
+
+    <div class="example-container mat-elevation-z8">
+
+        <div>
+            <button mat-button [matMenuTriggerFor]="menu" class="menu"><mat-icon>menu</mat-icon></button>
+
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="toEmployees()">Werknemers</button>
+                <button mat-menu-item (click)="newAppointment()">Nieuwe afspraak</button>
+            </mat-menu>
+        </div>
+        
+        <div class="sort">
+            <mat-form-field class="filter">
+                    <input matInput [(ngModel)]="searchKey" (keyup)="applyFilter()" placeholder="Filter" class="filter" >
+            </mat-form-field>
+
+            <mat-form-field class="filterDate">
+                <input matInput [matDatepicker]="picker" class="filterDate"
+                    (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-button [matMenuTriggerFor]="download" class="menu"><mat-icon>get_app</mat-icon></button>
+    
+            <mat-menu #download="matMenu">
+                <button mat-menu-item (click)="downloadPDF('loggedIn')">Aanwezig</button>
+                <button mat-menu-item [matMenuTriggerFor]="allVisitors">Alle bezoekers</button>
+            </mat-menu>
+
+            <mat-menu #allVisitors="matMenu">
+                <button mat-menu-item (click)="downloadPDF('day')">Dag</button>
+                <button mat-menu-item (click)="downloadPDF('week')">Week</button>
+                <button mat-menu-item (click)="downloadPDF('month')">Maand</button>
+            </mat-menu>
+
+            <mat-menu #loggedIn="matMenu">
+                <button mat-menu-item (click)="downloadPDF('loggedIn')">PDF</button>
+                <button mat-menu-item (click)="downloadExcel('loggedIn')">Excel</button>
+            </mat-menu>
+
+
+        </div>
+    
+        <div class="table-responsive" flex layout="row">
+            <mat-table [dataSource]="listData" matSort>
+
+                <ng-container matColumnDef="loggedIn">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let visitor"><button mat-icon-button  (click)="logInOut(visitor)">
+                        <mat-icon *ngIf="visitor.loggedIn">person</mat-icon>
+                        <mat-icon *ngIf="!visitor.loggedIn">person_outline</mat-icon>
+                    </button></mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Naam</mat-header-cell>
+                    <mat-cell *matCellDef="let visitor"> {{visitor.name}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="firstname">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Voornaam </mat-header-cell>
+                    <mat-cell *matCellDef="let visitor"> {{visitor.firstname}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="company">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Bedrijf </mat-header-cell>
+                    <mat-cell *matCellDef="let visitor"> {{visitor.company}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="subject">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Reden </mat-header-cell>
+                    <mat-cell *matCellDef="let visitor"> {{visitor.subject}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                    <mat-cell *matCellDef="let visitor"> {{visitor.email}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="telnr">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Telnr </mat-header-cell>
+                    <mat-cell *matCellDef="let visitor"> {{visitor.telnr}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="day">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Datum </mat-header-cell>
+                    <mat-cell *matCellDef="let visitor"> {{visitor.day}} </mat-cell>
+                </ng-container>           
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let visitor">
+                    <button mat-icon-button (click)="info(visitor)" color="primary"><mat-icon>info</mat-icon></button>
+                    </mat-cell>
+                </ng-container>
+                
+                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
+
+            </mat-table>
+
+        </div>
+    </div>
+    </div>
+</body>

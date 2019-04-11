@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { EmployeeService, Employee, VisitorService, Visitor } from '../../shared';
-import { MatDialogRef, MAT_DIALOG_DATA } from '../../material';
+import { EmployeeService, Employee, VisitorService, Visitor } from '../../../shared';
+import { MatDialogRef, MAT_DIALOG_DATA } from '../../../material';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
@@ -40,6 +40,10 @@ export class AppointmentDialogComponent implements OnInit {
         const newVisitor: Visitor = {name, firstname, email, company, day, subject, employee_id,
             location, telnr,  loggedIn} as Visitor;
         this.visitorService.addVisitor(newVisitor).subscribe();
+    }
+
+    onCancel() {
+        this.dialogRef.close();
     }
 
 }

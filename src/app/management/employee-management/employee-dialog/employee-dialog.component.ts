@@ -1,35 +1,23 @@
 import { Component, Injectable, OnInit, ViewChild, Inject } from '@angular/core';
-import { EmployeeService } from '../../shared/employee.service';
-import { MatDialogRef } from '@angular/material';
-import { Employee } from '../../shared';
-import { EmployeeManagementComponent } from '../employee-management/employee-management.component';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { Employee, EmployeeService } from 'src/app/shared';
 
 @Component ({
     templateUrl: 'employee-dialog.component.html',
-    styles: [`.example-container {
-      height: 400px;
-      overflow: auto;
-    }
-
-    table {
-      width: 100%;
-    }
-
-    button {
-      margin: 16px 8px;
-    }
-    `]
+    styleUrls: [`employee-dialog.component.css`]
 })
 export class EmployeeDialogComponent {
 
-  constructor(private service: EmployeeService, public dialogRef: MatDialogRef<EmployeeDialogComponent>) {
+  constructor(private service: EmployeeService, public dialogRef: MatDialogRef<EmployeeDialogComponent>,
+    private snackBar: MatSnackBar) {
   }
 
   onSubmit(formValues) {
     if (formValues.firstname != null) {
       this.addEmployee(formValues.name, formValues.email, formValues.firstname);
     } else {this.addWOname(formValues.name, formValues.email); }
-
+    this.snackBar.open('Nieuwe werknemer is opgeslagen.', '',
+      { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
     this.dialogRef.close();
   }
 

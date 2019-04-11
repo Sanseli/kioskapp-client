@@ -1,7 +1,88 @@
 <div class="container">
     <form (ngSubmit)="onSubmit(visitorForm.value)" #visitorForm="ngForm">
+        <div class="form1 p">
+            <mat-form-field class="full-width">
+                <input matInput required placeholder="Reden" type="text" id="subject"
+                [(ngModel)]="subject" name="subject" #r="ngModel">
+                <mat-error *ngIf="r.invalid && (r.dirty || r.touched)" color="warn">Geef een geldige reden in a.u.b.</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field class="full-width">
+                <mat-select required placeholder="Werknemer" id="employee"
+                [(ngModel)]="employee" name="employee" #em="ngModel">
+                    <mat-option *ngFor="let employee of data.comp.employees" [value]="employee">
+                        {{employee.name}} {{employee.firstname}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="em.invalid && (em.dirty || em.touched)" color="warn">Kies een werknemer a.u.b.</mat-error>
+            </mat-form-field>
+        </div>
 
-        <mat-horizontal-stepper #stepper [linear]="isLinear">
+        <mat-divider></mat-divider>
+
+        <div class="form2 p">
+            <mat-form-field class="half-width pad" >
+                <input matInput required placeholder="Naam" id="nameVisitor"
+                [(ngModel)]="nameVisitor" name="nameVisitor" #n="ngModel">
+                <mat-error *ngIf="n.invalid && (n.dirty || n.touched)" color="warn">Geef een geldige naam in a.u.b.</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field class="half-width">
+                <input matInput required placeholder="Voornaam" id="firstnameVisitor"
+                [(ngModel)]="firstnameVisitor" name="firstnameVisitor" #fn="ngModel">
+                <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Bedrijf" id="companyVisitor"
+                [(ngModel)]="companyVisitor" name="companyVisitor" #c="ngModel">
+                <mat-error *ngIf="c.invalid && (c.dirty || c.touched)" color="warn">Geef een geldig bedrijf in a.u.b.</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field class="half-width pad">
+                <input matInput placeholder="TelNr" id="telVisitor"
+                [(ngModel)]="telVisitor" name="telVisitor" #tel="ngModel">
+                <mat-error *ngIf="tel.invalid && (tel.dirty || tel.touched)" color="warn">Geef een geldig nummer in a.u.b.</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field class="half-width">
+                <input matInput required placeholder="E-mail" id="emailVisitor"
+                [(ngModel)]="emailVisitor" name="emailVisitor" #e="ngModel">
+                <mat-error *ngIf="e.invalid && (e.dirty || e.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
+            </mat-form-field>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="form3 p">
+            <mat-form-field class="low-width pad">
+                <input matInput required [min]="minDate" [matDatepicker]="picker" placeholder="Datum"
+                id="date" [(ngModel)]="date" name="date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+    
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Plaats" id="location"
+                [(ngModel)]="location" name="location">
+            </mat-form-field>
+        </div>
+
+        <div class="button-row">
+            <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!visitorForm.form.valid">Submit</button>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+<!-- <div class="container">
+    <form (ngSubmit)="onSubmit(visitorForm.value)" #visitorForm="ngForm">
+
+        <mat-horizontal-stepper #stepper>
 
             <mat-step [stepControl]="firstFormGroup">
 
@@ -96,4 +177,4 @@
         <button mat-flat-button type="submit" color="primary">Submit</button>
    
     </form>
-</div>
+</div> -->

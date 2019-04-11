@@ -8,7 +8,7 @@
 
 .refreshbut { float: right; }
 
-mat-table { max-height: 550px; overflow: auto; }
+mat-table { height: 550px; overflow: auto; }
 
 .back { margin-left: 1%; margin-top: 1%; } 
 

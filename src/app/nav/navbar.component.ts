@@ -20,6 +20,10 @@ export class NavBarComponent {
         // this.router.navigate(['/home'])
     }
 
+    toManagement() {
+        this.router.navigate(['/management']);
+    }
+
     openDialog(mes: string) {
         let dialogres = '';
 

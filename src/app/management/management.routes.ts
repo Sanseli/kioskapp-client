@@ -1,10 +1,14 @@
-import { ManagementComponent, EmployeeManagementComponent } from './index';
+import { AppointmentComponent, EmployeeManagementComponent, ManagementComponent } from './index';
 import { VisitorResolverService, EmployeeResolverService } from '../shared';
 
 export const managementRoutes = [
     {
         path: '',
-        component: ManagementComponent,
+        component: ManagementComponent
+    },
+    {
+        path: 'appointments',
+        component: AppointmentComponent,
         resolve: { visitorList: VisitorResolverService, employeeList: EmployeeResolverService }
     },
     {

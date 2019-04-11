@@ -1,0 +1,22 @@
+mat-form-field.filter {
+    font-size: 14px;
+    width: 75%;
+}
+
+mat-form-field.filterDate { font-size: 14px; width: 15%; }
+
+mat-table { width: 100%; }
+
+.buttons { width: 100%; float: right; }
+
+mat-menu { width: 500px; }
+
+.sort { margin-left: 3%; margin-right: 3%; }
+
+mat-table { height: 550px; overflow: auto; background-color: #fafafaf1;}
+
+.menu { margin-left: 1%; margin-top: 1%; }
+
+.example-container { background-color: #fafafaf1;}
+
+

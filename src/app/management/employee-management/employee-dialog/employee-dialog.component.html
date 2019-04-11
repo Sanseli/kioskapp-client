@@ -1,0 +1,28 @@
+<div class="container">
+  <form (ngSubmit)="onSubmit(employeeForm.value)" #employeeForm="ngForm">
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput placeholder="Naam" mat-form-field type="text"  id="name"
+          required [(ngModel)]="name" name="name" #n="ngModel">
+        <mat-error *ngIf="n.invalid && (n.dirty || n.touched)" color="warn">Geef een geldige naam in a.u.b.</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+          <input matInput placeholder="firstname" mat-form-field type="text"  id="firstname"
+            [(ngModel)]="firstname" name="firstname" #fn="ngModel">
+          <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput placeholder="email" mat-form-field type="email"  id="email"
+          required [(ngModel)]="email" name="email" #em="ngModel">
+          <mat-error *ngIf="em.invalid && (em.dirty || em.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="button-row">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.form.valid">Submit</button>
+      <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>

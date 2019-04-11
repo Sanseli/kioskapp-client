@@ -10,9 +10,9 @@
   padding-right: 5%;
 }
 
-.form {
+.container {
   min-width: 150px;
-  max-width: 800;
+  max-width: 800px;
   width: 100%;
 }
 
@@ -28,8 +28,14 @@ mat-horizontal-stepper { background-color: #fafafafa; }
 
 .mat-step{ height: 200px;}
 
-button { float: right; }
+.button-row {float: right;}
 
 .arrleft { float: left; }
+
 .arrright { float: right; }
 
+.p { padding: 2%; }
+
+button {
+  margin: 16px 8px;
+}

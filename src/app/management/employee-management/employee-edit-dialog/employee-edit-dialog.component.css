@@ -1,0 +1,14 @@
+form { padding: 2%;}
+
+.container {
+    height: 300px;
+    width: 500px;
+}
+
+button {
+    margin: 16px 8px;
+}
+
+mat-form-field { width: 100%; }
+
+.button-row {float: right;}

@@ -5,23 +5,7 @@ import { DialogComponent } from '../shared/dialog-component/dialog.component';
 
 @Component ({
     templateUrl: 'home.component.html',
-    styles: [`
-    .row button { padding: 10% 15% 10% 15%; font-size: 200%;
-        width: 350px; margin-top: 1%}
-
-        body {
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
-        .img-responsive {
-            max-width: 55%;-
-            max-height: 55%;
-            padding-top: 1%;
-            margin-bottom: 7%;
-          }
-
-    `]
+    styleUrls: [`home.component.css`]
 })
 export class HomeComponent {
     loading = true;

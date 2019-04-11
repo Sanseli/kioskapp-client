@@ -1,5 +1,6 @@
-import { ManagementComponent, EmployeeDialogComponent, EmployeeManagementComponent,
-AppointmentDialogComponent, VisitorInfoDialogComponent, EmployeeEditDialogComponent } from './index';
+import { AppointmentComponent, EmployeeDialogComponent, EmployeeManagementComponent,
+AppointmentDialogComponent, VisitorInfoDialogComponent, EmployeeEditDialogComponent, 
+ManagementComponent } from './index';
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -10,12 +11,13 @@ import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
-        ManagementComponent,
+        AppointmentComponent,
         EmployeeDialogComponent,
         EmployeeManagementComponent,
         AppointmentDialogComponent,
         VisitorInfoDialogComponent,
-        EmployeeEditDialogComponent
+        EmployeeEditDialogComponent,
+        ManagementComponent
     ],
     imports: [
         FormsModule,
