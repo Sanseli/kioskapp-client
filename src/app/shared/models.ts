@@ -1,3 +1,5 @@
+import { StringifyOptions } from 'querystring';
+
 export interface Employee {
     id?: number;
     name: string;
@@ -17,4 +19,13 @@ export interface Visitor {
     employee_id: number;
     location?: string;
     loggedIn: boolean;
+}
+
+export interface EmailModel {
+    vName: string;
+    vFirstname: string;
+    // vCompany?: string;
+    // vSubject: string;
+    // eFirstname: string;
+    // eEmail: string;
 }

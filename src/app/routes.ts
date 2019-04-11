@@ -5,9 +5,8 @@ import {
     LoginCompanyComponent,
     LoginPrivateComponent,
     LogoutComponent,
-    ManagementComponent,
-    EmployeeManagementComponent,
-    LoginExistentComponent
+    LoginExistentComponent,
+    NotFoundComponent
 } from './index';
 import { EmployeeResolverService, VisitorResolverService } from './shared';
 
@@ -48,5 +47,9 @@ export const appRoutes: Routes = [
         path: 'login/existent',
         component: LoginExistentComponent,
         resolve: { visitorList: VisitorResolverService }
+    },
+    {
+        path: '**',
+        component: NotFoundComponent
     }
 ];

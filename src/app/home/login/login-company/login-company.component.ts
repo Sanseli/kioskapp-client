@@ -6,6 +6,7 @@ import { Employee, Visitor } from 'src/app/shared/models';
 import { formatDate } from '@angular/common';
 import { MatSnackBar, MatDialog, MatDialogConfig } from '@angular/material';
 import { DialogComponent } from 'src/app/shared/dialog-component/dialog.component';
+import { EmailService } from 'src/app/shared/email.service';
 
 @Component ({
     templateUrl: 'login-company.component.html',
@@ -19,7 +20,8 @@ export class LoginCompanyComponent {
   visitors: Visitor[] = [];
 
   constructor(private visitorService: VisitorService, private snackBar: MatSnackBar,
-    private router: Router, private route: ActivatedRoute, public dialog: MatDialog ) {
+    private router: Router, private route: ActivatedRoute, public dialog: MatDialog,
+    private emailService: EmailService ) {
     this.employees = this.route.snapshot.data['employeeList'];
   }
 
@@ -52,7 +54,7 @@ export class LoginCompanyComponent {
   addVisitor(name: string, firstname: string,  email: string, loggedIn: boolean, company: string,
       day: string, subject: string, employee_id: number, telnr?: string): void {
     const newVisitor: Visitor = {name, firstname, email, telnr, company, day, subject, employee_id, loggedIn} as Visitor;
-    console.log(newVisitor)
+    console.log(newVisitor);
     this.visitorService.addVisitor(newVisitor).subscribe();
   }
 

@@ -8,8 +8,6 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { VisitorService, EmployeeService } from '../shared';
 import { VisitorInfoDialogComponent } from './visitor-info-dialog/visitor-info-dialog.component';
 import { DialogComponent } from '../shared/dialog-component/dialog.component';
-import { DayTemplateContext } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-day-template-context';
-import { format } from 'path';
 declare const require: any;
 const jsPDF = require('jspdf');
 require('jspdf-autotable');

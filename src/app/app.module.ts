@@ -14,21 +14,16 @@ import {
   LoginComponent,
   LoginCompanyComponent,
   LoginPrivateComponent,
-  ManagementComponent,
   LogoutComponent,
   EmployeeService,
   NavBarComponent,
-  EmployeeDialogComponent,
   DialogComponent,
-  EmployeeManagementComponent,
-  AppointmentDialogComponent,
   EmailService,
   LoginExistentComponent,
   VisitorService,
   EmployeeResolverService,
   VisitorResolverService,
-  VisitorInfoDialogComponent,
-  EmployeeEditDialogComponent
+  NotFoundComponent
   } from './index';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
@@ -46,14 +41,9 @@ import 'hammerjs';
     LoginPrivateComponent,
     LogoutComponent,
     NavBarComponent,
-    // ManagementComponent,
-    // EmployeeDialogComponent,
     DialogComponent,
-    // EmployeeManagementComponent,
-    // VisitorInfoDialogComponent,
     LoginExistentComponent,
-    // AppointmentDialogComponent,
-    // EmployeeEditDialogComponent
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -80,11 +70,7 @@ import 'hammerjs';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    // EmployeeDialogComponent,
-    DialogComponent,
-    // AppointmentDialogComponent,
-    // VisitorInfoDialogComponent,
-    // EmployeeEditDialogComponent
+    DialogComponent
   ]
 })
 export class AppModule { }
