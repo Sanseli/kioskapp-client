@@ -15,7 +15,7 @@ export class EmployeeManagementComponent {
 
   employees: Employee[];
   listData: MatTableDataSource<Employee>;
-  displayedColumns = ['id', 'name', 'firstname', 'email', 'actions'];
+  displayedColumns = ['name', 'firstname', 'email', 'actions'];
   searchKey: string;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -54,7 +54,6 @@ export class EmployeeManagementComponent {
     const dialogRef = this.dialog.open(EmployeeDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('dialogref = closed');
       this.loadData();
     });
   }
@@ -89,7 +88,7 @@ export class EmployeeManagementComponent {
   }
 
   back() {
-    this.router.navigate(['/management']);
+    this.router.navigate(['/management/appointments']);
   }
 
   openDialog(mes: string) {

@@ -8,6 +8,7 @@ import { Employee } from '../../../shared/models';
     styleUrls: [`employee-edit-dialog.component.css`]
 })
 export class EmployeeEditDialogComponent {
+  cancel: boolean;
   isDirty = true;
   employee: Employee;
   employeeEdit: Employee;
@@ -21,19 +22,21 @@ export class EmployeeEditDialogComponent {
   }
 
   onSubmit() {
-    this.employee.name = this.employeeEdit.name;
-    this.employee.firstname = this.employeeEdit.firstname;
-    this.employee.email = this.employeeEdit.email;
-    setTimeout(() => {
-      this.service.updateEmployee(this.employee).subscribe();
-      this.snackBar.open('Uw wijzigingen zijn opgeslagen.', '',
-      { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
-      this.dialogRef.close();
-    }, 300);
-
+    if (this.cancel !== true) {
+      this.employee.name = this.employeeEdit.name;
+      this.employee.firstname = this.employeeEdit.firstname;
+      this.employee.email = this.employeeEdit.email;
+      setTimeout(() => {
+        this.service.updateEmployee(this.employee).subscribe();
+        this.snackBar.open('Uw wijzigingen zijn opgeslagen.', '',
+        { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+        this.dialogRef.close();
+      }, 300);
+    }
   }
 
   onCancel() {
+    this.cancel = true;
     this.dialogRef.close();
   }
 

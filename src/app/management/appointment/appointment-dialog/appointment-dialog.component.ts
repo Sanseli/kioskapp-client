@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
     providers: [EmployeeService]
 })
 export class AppointmentDialogComponent implements OnInit {
+    cancel: boolean;
     minDate: any;
     employees: Employee[];
     visitors: Visitor[];
@@ -27,11 +28,12 @@ export class AppointmentDialogComponent implements OnInit {
     }
 
     onSubmit(formValues) {
-        this.newVisitor(formValues.nameVisitor, formValues.firstnameVisitor, formValues.emailVisitor,
-            formatDate(formValues.date, 'dd-MM-yyyy', 'en'), formValues.employee.id, formValues.subject,
-            false, formValues.companyVisitor, formValues.telVisitor,
-            formValues.location);
-
+        if (this.cancel !== true) {
+            this.newVisitor(formValues.nameVisitor, formValues.firstnameVisitor, formValues.emailVisitor,
+                formatDate(formValues.date, 'dd-MM-yyyy', 'en'), formValues.employee.id, formValues.subject,
+                false, formValues.companyVisitor, formValues.telVisitor,
+                formValues.location);
+        }
         this.dialogRef.close();
     }
 
@@ -43,6 +45,7 @@ export class AppointmentDialogComponent implements OnInit {
     }
 
     onCancel() {
+        this.cancel = true;
         this.dialogRef.close();
     }
 

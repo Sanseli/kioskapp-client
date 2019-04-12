@@ -23,7 +23,8 @@ import {
   VisitorService,
   EmployeeResolverService,
   VisitorResolverService,
-  NotFoundComponent
+  NotFoundComponent,
+  AuthService
   } from './index';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
@@ -66,6 +67,7 @@ import 'hammerjs';
     DatePipe,
     EmployeeResolverService,
     VisitorResolverService,
+    AuthService,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2000}}
   ],
   bootstrap: [AppComponent],

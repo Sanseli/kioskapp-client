@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialogConfig, MatDialog, MatTableDataSource, MatSort} from 'src/app/material';
+import { MatDialogConfig, MatDialog, MatTableDataSource, MatSort, MatSnackBar} from 'src/app/material';
 import { AppointmentDialogComponent } from './appointment-dialog/appointment-dialog.component';
 import { formatDate } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -33,7 +33,8 @@ export class AppointmentComponent {
     @ViewChild(MatSort) sort: MatSort;
 
     constructor(private router: Router, public dialog: MatDialog, private route: ActivatedRoute,
-        private visitorService: VisitorService, private employeeService: EmployeeService) {
+        private visitorService: VisitorService, private employeeService: EmployeeService, 
+        private snackBar: MatSnackBar) {
         this.visitors = this.route.snapshot.data['visitorList'];
         this.employees = this.route.snapshot.data['employeeList'];
         this.loadData();
@@ -161,6 +162,28 @@ export class AppointmentComponent {
             }
         });
     }
+
+    deleteEmployee(employee) {
+        let dialogres = '';
+    
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = { message: `Weet u zeker dat u ${employee.firstname} ${employee.name} wilt verwijderen uit de database?` };
+        const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    
+        dialogRef.afterClosed().subscribe(result => {
+            dialogres = `${result}`;
+    
+            if (dialogres === 'yes') {
+              if (this.employeeService.deleteEmployee(employee.id).subscribe()) {
+                this.snackBar.open(`Werknemer ${employee.firstname} ${employee.name} is verwijderd.`, '',
+                    { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+                this.loadData();
+              }
+            }
+        });
+      }
 
     downloadPDF(string: string) {
         let formattedDate;

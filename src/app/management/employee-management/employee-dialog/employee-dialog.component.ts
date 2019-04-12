@@ -7,21 +7,20 @@ import { Employee, EmployeeService } from 'src/app/shared';
     styleUrls: [`employee-dialog.component.css`]
 })
 export class EmployeeDialogComponent {
+  cancel: boolean;
 
   constructor(private service: EmployeeService, public dialogRef: MatDialogRef<EmployeeDialogComponent>,
     private snackBar: MatSnackBar) {
   }
 
   onSubmit(formValues) {
-    if (formValues.firstname != null) {
-      this.addEmployee(formValues.name, formValues.email, formValues.firstname);
-    } else {this.addWOname(formValues.name, formValues.email); }
-    this.snackBar.open('Nieuwe werknemer is opgeslagen.', '',
-      { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
-    this.dialogRef.close();
-  }
-
-  onCancel() {
+    if (this.cancel !== true) {
+      if (formValues.firstname != null) {
+        this.addEmployee(formValues.name, formValues.email, formValues.firstname);
+      } else {this.addWOname(formValues.name, formValues.email); }
+      this.snackBar.open('Nieuwe werknemer is opgeslagen.', '',
+       { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+    }
     this.dialogRef.close();
   }
 
@@ -35,5 +34,11 @@ export class EmployeeDialogComponent {
     const newEmployee: Employee = {name, email} as Employee;
     console.log(newEmployee);
     this.service.addEmployee(newEmployee).subscribe();
+  }
+  
+  onCancel() {
+    console.log('cancel')
+    this.cancel = true;
+    this.dialogRef.close();
   }
 }
