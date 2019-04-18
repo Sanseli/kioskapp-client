@@ -5,6 +5,7 @@ export interface Employee {
     name: string;
     firstname?: string;
     email: string;
+    user_id: string;
 }
 
 export interface Visitor {
@@ -24,8 +25,11 @@ export interface Visitor {
 export interface EmailModel {
     vName: string;
     vFirstname: string;
-    // vCompany?: string;
-    // vSubject: string;
-    // eFirstname: string;
-    // eEmail: string;
+}
+
+export interface User {
+    id?: number;
+    name: string;
+    password?: string;
+    c_password?: string;
 }

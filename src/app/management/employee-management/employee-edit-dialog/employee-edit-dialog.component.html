@@ -1,28 +1,74 @@
 <div class="container">
-    <form (ngSubmit)="onSubmit(employeeForm.value)" #employeeForm="ngForm">
-        <div class="form-group">
-          <mat-form-field>
-            <input matInput placeholder="Naam" mat-form-field id="name"
-              required [(ngModel)]="employeeEdit.name" name="name" #n="ngModel">
-            <mat-error *ngIf="n.invalid && (n.dirty || n.touched)" color="warn">Geef een geldige naam in a.u.b.</mat-error>
-          </mat-form-field>
+
+  <button mat-icon-button (click)="toggleEdit()" [disabled]="edit"><mat-icon >edit</mat-icon></button>
+  <button mat-icon-button (click)="close()"><mat-icon >close</mat-icon></button>
+
+  <form (ngSubmit)="onSubmit(employeeForm.value)" #employeeForm="ngForm">
+
+    <div class="form-group">
+      <mat-form-field>
+        <input  matInput placeholder="Naam" mat-form-field id="name" [readonly]="!edit"
+          required [(ngModel)]="employeeEdit.name" name="name" #n="ngModel">
+        <mat-error *ngIf="n.invalid && (n.dirty || n.touched)" color="warn">Geef een geldige naam in a.u.b.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+          <input matInput placeholder="Voornaam" mat-form-field type="text"  id="firstname" [readonly]="!edit"
+            [(ngModel)]="employeeEdit.firstname" name="firstname" #fn="ngModel">
+          <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field>
+        <input matInput placeholder="E-mail" mat-form-field type="email"  id="email" [readonly]="!edit"
+          required [(ngModel)]="employeeEdit.email" name="email" #em="ngModel">
+        <mat-error *ngIf="em.invalid && (em.dirty || em.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="usercon">
+      <div *ngIf="!userexist || !newuser">
+          <button mat-raised-button (click)="newUser()">Maak login</button>
+        </div>
     
-          <mat-form-field>
-              <input matInput placeholder="Voornaam" mat-form-field type="text"  id="firstname"
-                [(ngModel)]="employeeEdit.firstname" name="firstname" #fn="ngModel">
-              <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
+        <div *ngIf="userexists || newuser">
+    
+          <div class="form-group">
+            <mat-form-field >
+              <input matInput placeholder="Gebruikersnaam" mat-form-field type="text"  id="username"
+                required [(ngModel)]="userEdit.name" name="username" #un="ngModel">
+                <mat-error *ngIf="un.invalid && (un.dirty || un.touched)" color="warn">Geef een geldige gebruikersnaam in a.u.b.</mat-error>
             </mat-form-field>
+          </div>
+    
+          <div class="form-group">
+            <mat-form-field >
+              <input matInput placeholder="Wachtwoord" mat-form-field type="password"  id="password"
+                required [(ngModel)]="userEdit.password" name="password" #pass="ngModel">
+                <mat-error *ngIf="pass.invalid && (pass.dirty || pass.touched)" color="warn">Geef een geldig wachtwoord in a.u.b.</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field >
+              <input matInput placeholder="Wachtwoord herhalen" type="password"  id="c_password"
+                  required [(ngModel)]="userEdit.c_password" name="c_password" #c_pass="ngModel">
+                  <mat-error *ngIf="c_pass.equals(pass)" color="warn">Wachtwoord komt niet overeen.</mat-error>
+            </mat-form-field>
+          </div>
         </div>
-        <div class="form-group">
-          <mat-form-field>
-            <input matInput placeholder="E-mail" mat-form-field type="email"  id="email"
-              required [(ngModel)]="employeeEdit.email" name="email" #em="ngModel">
-            <mat-error *ngIf="em.invalid && (em.dirty || em.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
-          </mat-form-field>
-        </div>
-        <div class="button-row">
-          <button mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.form.valid">Submit</button>
-          <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-        </div>
-    </form>
+    </div>
+    
+
+    <div class="button-row">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.form.valid || !edit">Submit</button>
+      <button mat-raised-button color="warn" (click)="onCancel()" [disabled]="!edit">Cancel</button>
+
+
+
+    </div>
+
+  </form>
+
 </div>
