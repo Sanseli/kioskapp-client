@@ -1,6 +1,6 @@
 import { AppointmentComponent, EmployeeDialogComponent, EmployeeManagementComponent,
 AppointmentDialogComponent, VisitorInfoDialogComponent, EmployeeEditDialogComponent, 
-ManagementComponent } from './index';
+ManagementComponent, EqualValidator } from './index';
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -17,7 +17,8 @@ import { FormsModule } from '@angular/forms';
         AppointmentDialogComponent,
         VisitorInfoDialogComponent,
         EmployeeEditDialogComponent,
-        ManagementComponent
+        ManagementComponent,
+        EqualValidator
     ],
     imports: [
         FormsModule,

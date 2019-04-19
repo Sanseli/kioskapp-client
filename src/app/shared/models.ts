@@ -31,5 +31,5 @@ export interface User {
     id?: number;
     name: string;
     password?: string;
-    c_password?: string;
+    //c_password?: string;
 }

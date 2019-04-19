@@ -30,34 +30,36 @@
     <mat-divider></mat-divider>
 
     <div class="usercon">
-      <div *ngIf="!userexist || !newuser">
-          <button mat-raised-button (click)="newUser()">Maak login</button>
+      <div *ngIf="(!userexist || !newuser) && edit">
+        <button mat-raised-button (click)="newUser()">Maak login</button>
+      </div>
+  
+      <div *ngIf="userexists || newuser">
+  
+        <div class="form-group">
+          <mat-form-field >
+            <input matInput placeholder="Gebruikersnaam" mat-form-field type="text"  id="username"
+              required [(ngModel)]="userEdit.name" name="username" #un="ngModel">
+              <mat-error *ngIf="un.invalid && (un.dirty || un.touched)" color="warn">Geef een geldige gebruikersnaam in a.u.b.</mat-error>
+          </mat-form-field>
         </div>
-    
-        <div *ngIf="userexists || newuser">
-    
-          <div class="form-group">
-            <mat-form-field >
-              <input matInput placeholder="Gebruikersnaam" mat-form-field type="text"  id="username"
-                required [(ngModel)]="userEdit.name" name="username" #un="ngModel">
-                <mat-error *ngIf="un.invalid && (un.dirty || un.touched)" color="warn">Geef een geldige gebruikersnaam in a.u.b.</mat-error>
-            </mat-form-field>
-          </div>
-    
-          <div class="form-group">
-            <mat-form-field >
-              <input matInput placeholder="Wachtwoord" mat-form-field type="password"  id="password"
-                required [(ngModel)]="userEdit.password" name="password" #pass="ngModel">
-                <mat-error *ngIf="pass.invalid && (pass.dirty || pass.touched)" color="warn">Geef een geldig wachtwoord in a.u.b.</mat-error>
-            </mat-form-field>
-    
-            <mat-form-field >
-              <input matInput placeholder="Wachtwoord herhalen" type="password"  id="c_password"
-                  required [(ngModel)]="userEdit.c_password" name="c_password" #c_pass="ngModel">
-                  <mat-error *ngIf="c_pass.equals(pass)" color="warn">Wachtwoord komt niet overeen.</mat-error>
-            </mat-form-field>
-          </div>
+  
+        <div class="form-group">
+          <mat-form-field >
+            <input matInput placeholder="Wachtwoord" mat-form-field type="password"  id="password" 
+              required [(ngModel)]="userEdit.password" name="password" #pass="ngModel" reverse="true">
+              <mat-error *ngIf="pass.invalid && (pass.dirty || pass.touched)" color="warn">Geef een geldig wachtwoord in a.u.b.</mat-error>
+          </mat-form-field>
         </div>
+        
+        <!-- <div class="form-group">
+          <mat-form-field >
+            <input matInput placeholder="Wachtwoord herhalen" type="password"  id="c_password"
+                required [(ngModel)]="userEdit.c_password" name="c_password" #c_pass="ngModel">
+                <mat-error *ngIf="passwordEquals()" color="warn">Wachtwoord komt niet overeen.</mat-error>
+          </mat-form-field>
+        </div> -->
+      </div>
     </div>
     
 

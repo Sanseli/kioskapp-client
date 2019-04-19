@@ -5,3 +5,4 @@ export * from './appointment/appointment-dialog/appointment-dialog.component';
 export * from './visitor-info-dialog/visitor-info-dialog.component';
 export * from './employee-management/employee-edit-dialog/employee-edit-dialog.component';
 export * from './management.component';
+export * from './equal-validator.directive';

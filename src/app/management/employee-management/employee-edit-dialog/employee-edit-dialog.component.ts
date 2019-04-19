@@ -1,6 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, ErrorStateMatcher } from '@angular/material';
 import { AuthService, EmployeeService, Employee, User } from 'src/app/shared';
+import { jsonpCallbackContext } from '@angular/common/http/src/module';
+import { ObserversModule } from '@angular/cdk/observers';
+import { Observable, observable } from 'rxjs';
+
 
 @Component ({
     templateUrl: 'employee-edit-dialog.component.html',
@@ -16,6 +20,7 @@ export class EmployeeEditDialogComponent {
   newuser: boolean;
   userEdit: User;
   user: User;
+  alerts:any;
 
   constructor(public service: EmployeeService, public dialogRef: MatDialogRef<EmployeeEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private snackBar: MatSnackBar, private authService: AuthService) {
@@ -35,6 +40,21 @@ export class EmployeeEditDialogComponent {
 
   onSubmit() {
     if (this.cancel !== true) {
+
+      if (this.userexist === true) {
+        if (this.newuser === true) {
+          let myData;
+          this.authService.register(this.userEdit)
+            .subscribe(res => {myData = res;});
+            setTimeout(() => {
+              console.log(myData);
+              let id = myData[0];
+              this.snackBar.open('Nieuwe user is aangemaakt.', '',
+              { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+              this.edit = false;
+            }, 2500);
+        }
+      }
       this.employee.name = this.employeeEdit.name;
       this.employee.firstname = this.employeeEdit.firstname;
       this.employee.email = this.employeeEdit.email;
@@ -45,13 +65,12 @@ export class EmployeeEditDialogComponent {
         this.edit = false;
       }, 300);
 
-      if (this.userexist === true) {
-        if (this.newuser === true) {
-          console.log(this.userEdit)
-          this.authService.register(this.userEdit).subscribe();
-        }
-      }
+      
     }
+  }
+
+  setReturnData(data) {
+    this.alerts = data;
   }
 
   onCancel() {
@@ -82,6 +101,10 @@ export class EmployeeEditDialogComponent {
     this.userexist = true;
     let name = this.employeeEdit.firstname.replace(/ /g, '') + '.' + this.employeeEdit.name.replace(/ /g, ''); 
     let password = ''; let c_password = '';
-    this.userEdit = {name, password, c_password} as User;
+    this.userEdit = {name, password} as User;
   }
+
+  // passwordEquals(): boolean {
+    
+  // }
 }

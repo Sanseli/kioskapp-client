@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
 import { User } from '.';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -12,9 +13,9 @@ export class AuthService {
         this.handleError = httpErrorHandler.createHandleError('EmployeeService');
     }
 
-    register(user: User) {
+    register(user: User): Observable<{}> {
         return this.http
         .post<User>('api/register', user)
-        .pipe(catchError(this.handleError('register', [])));
+        .pipe(catchError(this.handleError('register', user)));
     }
 }
