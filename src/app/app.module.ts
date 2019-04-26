@@ -6,7 +6,7 @@ import { appRoutes } from './routes';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdunitService } from './adunit.service';
 import { MaterialModule } from './material/material.module';
 import {
@@ -32,6 +32,7 @@ import { DatePipe } from '@angular/common';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from './material';
 import { ToastrModule } from 'ngx-toastr';
 import 'hammerjs';
+import { AuthInterceptor } from './shared/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import 'hammerjs';
     EmployeeResolverService,
     VisitorResolverService,
     AuthService,
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2000}}
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2000} },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

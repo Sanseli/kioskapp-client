@@ -6,7 +6,7 @@
     <div class="container allign-middle" >
         <mat-card>
             <div class="row" >
-                <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+                <form (ngSubmit)="onSubmit(form.value)" #form="ngForm">
                     <mat-form-field class="full-width">
                         <input matInput placeholder="Gebruikersnaam" id="username" required
                         [(ngModel)]="username" name="username" #u="ngModel" color="primary">

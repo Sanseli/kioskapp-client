@@ -40,28 +40,32 @@ export class AppointmentComponent {
         this.loadData();
     }
 
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+          this.listData.sort = this.sort;
+        }, 1000);
+    }
+
     loadData() {
+        this.day = new Date();
+        const formattedDate = formatDate(this.day, 'dd-MM-yyyy', 'en');
+
         if (this.visitors != null) {
-            this.visitorService.getVisitors().subscribe(visitors => (this.visitors = visitors));
+            this.visitorService.getVisitors().subscribe(visitors =>
+                (this.listData = new MatTableDataSource(visitors.filter(function(visitor) {
+                    return visitor.day === formattedDate;
+                }))));
+                console.log(this.listData)
+        } else {
+            //setTimeout(() => {
+                this.listData = new MatTableDataSource(this.visitors.filter(function(visitor) {
+                    return visitor.day === formattedDate;
+                }));
+                console.log(this.listData)
+            //}, 400);
         }
-
-        setTimeout(() => {
-            this.day = new Date();
-            const formattedDate = formatDate(this.day, 'dd-MM-yyyy', 'en');
-
-            this.listData = new MatTableDataSource(this.visitors.filter(function(visitor) {
-                return visitor.day === formattedDate;
-            }));
-        }, 400);
-
     }
 
-    ngAfterViewInit() {
-        setTimeout(() => {
-            this.listData.sort = this.sort;
-        }, 400);
-  
-    }
 
     addEvent(type: Date, event: MatDatepickerInputEvent<Date>) {
         this.selectedDate = event.value;
@@ -80,19 +84,19 @@ export class AppointmentComponent {
         const componentData: any = { visitors: this.visitors, employees: this.employees };
 
         const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-
-
         dialogConfig.data =  { comp: componentData };
         const dialogRef = this.dialog.open(AppointmentDialogComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe(result => {
-            setTimeout(() => {
+            //setTimeout(() => {
+                console.log('load')
                 this.loadData();
                 setTimeout(() => {
                     this.listData.sort = this.sort;
                 }, 400);
-            }, 700);
+            //}, 700);
         });
     }
 

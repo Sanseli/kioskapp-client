@@ -1,7 +1,9 @@
 <div class="container">
 
-  <button mat-icon-button (click)="toggleEdit()" [disabled]="edit"><mat-icon >edit</mat-icon></button>
-  <button mat-icon-button (click)="close()"><mat-icon >close</mat-icon></button>
+  <div class="buttons">
+    <button mat-icon-button (click)="toggleEdit()" [disabled]="edit"><mat-icon >edit</mat-icon></button>
+    <button mat-icon-button (click)="close()"><mat-icon >close</mat-icon></button>
+  </div>
 
   <form (ngSubmit)="onSubmit(employeeForm.value)" #employeeForm="ngForm">
 
@@ -30,21 +32,25 @@
     <mat-divider></mat-divider>
 
     <div class="usercon">
-      <div *ngIf="(!userexist || !newuser) && edit">
+      <div *ngIf="(!userexist) && edit">
         <button mat-raised-button (click)="newUser()">Maak login</button>
       </div>
   
-      <div *ngIf="userexists || newuser">
+      <div *ngIf=" userexist || newuser">
   
         <div class="form-group">
           <mat-form-field >
-            <input matInput placeholder="Gebruikersnaam" mat-form-field type="text"  id="username"
+            <input matInput placeholder="Gebruikersnaam" mat-form-field type="text"  id="username" [readonly]="!edit"
               required [(ngModel)]="userEdit.name" name="username" #un="ngModel">
               <mat-error *ngIf="un.invalid && (un.dirty || un.touched)" color="warn">Geef een geldige gebruikersnaam in a.u.b.</mat-error>
           </mat-form-field>
         </div>
-  
-        <div class="form-group">
+        
+        <div *ngIf="userexist && !editp && edit">
+          <button mat-raised-button (click)="editpass()">Verander wachtwoord</button>
+        </div>
+
+        <div class="form-group" *ngIf="!userexist || editp">
           <mat-form-field >
             <input matInput placeholder="Wachtwoord" mat-form-field type="password"  id="password" 
               required [(ngModel)]="userEdit.password" name="password" #pass="ngModel" reverse="true">

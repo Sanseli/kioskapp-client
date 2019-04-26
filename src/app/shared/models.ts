@@ -5,7 +5,7 @@ export interface Employee {
     name: string;
     firstname?: string;
     email: string;
-    user_id: string;
+    user_token: string;
 }
 
 export interface Visitor {
@@ -30,6 +30,7 @@ export interface EmailModel {
 export interface User {
     id?: number;
     name: string;
+    email?: string;
     password?: string;
     //c_password?: string;
 }
