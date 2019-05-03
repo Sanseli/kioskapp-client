@@ -6,3 +6,5 @@ export * from './visitor-info-dialog/visitor-info-dialog.component';
 export * from './employee-management/employee-edit-dialog/employee-edit-dialog.component';
 export * from './management.component';
 export * from './equal-validator.directive';
+export * from './reset-password/reset-password.component';
+export * from './reset-password/reset-password-token/reset-password-token.component'

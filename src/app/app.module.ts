@@ -45,7 +45,7 @@ import { AuthInterceptor } from './shared/auth-interceptor';
     NavBarComponent,
     DialogComponent,
     LoginExistentComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

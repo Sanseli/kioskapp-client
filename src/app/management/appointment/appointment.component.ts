@@ -126,7 +126,6 @@ export class AppointmentComponent {
 
         setTimeout(() => {
             const componentData: any = { visitor: this.visitor, employee: this.visitorWith };
-
             const dialogRef = this.dialog.open(VisitorInfoDialogComponent, { width: '600px', data: { comp: componentData }
             });
         }, 500);
@@ -159,10 +158,13 @@ export class AppointmentComponent {
                     visitor.loggedIn = true;
                 }
 
-                this.visitorService.updateVisitor(visitor).subscribe();
-                setTimeout(() => {
+                this.visitorService.updateVisitor(visitor).subscribe((res) => {
+                    console.log('updated', res);
                     this.loadData();
-                }, 500);
+                });
+                // setTimeout(() => {
+                //     this.loadData();
+                // }, 500);
             }
         });
     }

@@ -1,6 +1,6 @@
 import { AppointmentComponent, EmployeeDialogComponent, EmployeeManagementComponent,
-AppointmentDialogComponent, VisitorInfoDialogComponent, EmployeeEditDialogComponent, 
-ManagementComponent, EqualValidator } from './index';
+AppointmentDialogComponent, VisitorInfoDialogComponent, EmployeeEditDialogComponent,
+ManagementComponent, EqualValidator, ResetPasswordComponent, ResetPasswordTokenComponent } from './index';
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -8,6 +8,7 @@ import { managementRoutes } from './management.routes';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule } from '@angular/forms';
+import { AuthGuardService } from '../guards/auth-guard.service';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,8 @@ import { FormsModule } from '@angular/forms';
         VisitorInfoDialogComponent,
         EmployeeEditDialogComponent,
         ManagementComponent,
+        ResetPasswordComponent,
+        ResetPasswordTokenComponent,
         EqualValidator
     ],
     imports: [
@@ -26,7 +29,7 @@ import { FormsModule } from '@angular/forms';
         CommonModule,
         RouterModule.forChild(managementRoutes)
     ],
-    providers: [],
+    providers: [AuthGuardService],
     entryComponents: [
         EmployeeDialogComponent,
         AppointmentDialogComponent,

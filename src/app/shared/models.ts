@@ -1,5 +1,3 @@
-import { StringifyOptions } from 'querystring';
-
 export interface Employee {
     id?: number;
     name: string;
@@ -29,8 +27,9 @@ export interface EmailModel {
 
 export interface User {
     id?: number;
-    name: string;
+    name?: string;
     email?: string;
     password?: string;
-    //c_password?: string;
+    c_password?: string;
+    token?: string;
 }

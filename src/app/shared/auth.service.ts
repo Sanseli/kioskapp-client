@@ -9,15 +9,23 @@ import { Observable } from 'rxjs';
 export class AuthService {
     private handleError: HandleError;
     token: any;
+    authentication: string;
 
     constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
         this.handleError = httpErrorHandler.createHandleError('EmployeeService');
     }
 
+    isAuthenticated(): boolean {
+        console.log(this.authentication);
+        if (this.authentication !== undefined) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     register(user: User): Observable<{}> {
-        return this.http
-        .post<User>('api/register', user)
-        .pipe(catchError(this.handleError('register', user)));
+        return this.http.post<User>('api/register', user);
     }
 
     details(token): Observable<{}> {
@@ -33,4 +41,23 @@ export class AuthService {
         .post<User>('api/login', user)
         .pipe(catchError(this.handleError('login', user)));
     }
+
+    reset(email): Observable<{}> {
+        return this.http
+        .post('api/password/create', {'email': email})
+        .pipe(catchError(this.handleError('reset', email)));
+    }
+
+    delete(user: User): Observable<{}> {
+        return this.http
+        .delete(`api/user/delete/${user.id}`)
+        .pipe(catchError(this.handleError('delete', user)));
+    }
+
+    changePass(user: User): Observable<User> {
+        return this.http
+        .post<User>(`api/password/reset`, user)
+        .pipe(catchError(this.handleError('changePass', user)));
+    }
+
 }

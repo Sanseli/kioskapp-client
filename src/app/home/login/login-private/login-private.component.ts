@@ -35,7 +35,6 @@ export class LoginPrivateComponent {
     this.addVisitor(formValues.lastName, formValues.firstName, formValues.email,
       formattedDate, formValues.reason, formValues.appointmentWith.id, true, formValues.phone);
 
-
     this.openSnackBar();
     this.router.navigate(['/home']);
   }
@@ -52,7 +51,7 @@ export class LoginPrivateComponent {
     loggedIn: boolean, telnr?: string): void {
     const newVisitor: Visitor = {name, firstname, email, telnr,  day, subject, employee_id, loggedIn} as Visitor;
     console.log(newVisitor);
-    this.visitorService.addVisitor(newVisitor).subscribe();
+    this.visitorService.addVisitor(newVisitor).subscribe((res) => { console.log(res)});
   }
 
   openDialog(mes: string) {
