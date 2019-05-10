@@ -8,18 +8,19 @@ import { MatSnackBar } from 'src/app/material/index';
     styleUrls: [`management.component.css`]
 })
 export class ManagementComponent {
+    loading = true;
+    progress = false;
 
-    constructor(private router: Router, private auth: AuthService, private snackBar: MatSnackBar) {
-
-    }
+    constructor(private router: Router, private auth: AuthService, private snackBar: MatSnackBar) {}
 
     @ViewChild('form') formValues; // Added this
 
     onSubmit(formValues) {
-        let name = formValues.username; let password = formValues.password;
-        let user = {name, password} as User;
-        console.log(user)
+        const name = formValues.username; const password = formValues.password;
+        const user = {name, password} as User;
         let result;
+        this.progress = true;
+
         this.auth.login(user).subscribe((res) => {
             result = res['success']; 
             console.log(result)
@@ -28,23 +29,25 @@ export class ManagementComponent {
                 this.router.navigate(['/management/appointments']);
 
             } else {
-                this.snackBar.open('Wachtwoord is niet correct.', '',
-                { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+                this.snackBar.open('Wachtwoord is niet correct.', '', {
+                    panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
+                });
                 this.formValues.resetForm();
+                this.progress = false;
             }
         } );
-
     }
 
     cancel() {
         this.router.navigate(['/home']);
-        
     }
 
     temp() {
         this.auth.authentication = 'testauth';
-
         this.router.navigate(['/management/appointments']);
+    }
 
+    onLoad() {
+        this.loading = false;
     }
 }

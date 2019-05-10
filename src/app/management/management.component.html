@@ -1,35 +1,43 @@
-<body>
+<div class="spinner" [hidden]="!loading">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="progressbar" [hidden]="!progress">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div [hidden]="loading">
     <div class="col-md-12 text-center h-75img ">
-        <img  src="assets/3it-tr.png"  class="img-responsive" alt="Responsive image">
+        <img  src="assets/3it-tr.png"  class="img-responsive" alt="Responsive image" (load)="onLoad()">
     </div>
 
     <div class="container allign-middle" >
         <mat-card>
-            <div class="row" >
-                <form (ngSubmit)="onSubmit(form.value)" #form="ngForm">
-                    <mat-form-field class="full-width">
-                        <input matInput placeholder="Gebruikersnaam" id="username" required
-                        [(ngModel)]="username" name="username" #u="ngModel" color="primary">
-                    </mat-form-field>
-    
-                    <mat-form-field class="full-width">
-                        <input matInput placeholder="Wachtwoord" id="Password" required type="password"
-                        [(ngModel)]="password" name="password" #p="ngModel" color="primary">
-                    </mat-form-field>
-    
-                    <button mat-flat-button type="submit" color="primary" class="btn btn-success">Submit</button>
+            <div>
+                <div class="row" >
+                    <form (ngSubmit)="onSubmit(form.value)" #form="ngForm">
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Gebruikersnaam" id="username" required
+                            [(ngModel)]="username" name="username" #u="ngModel" color="primary">
+                        </mat-form-field>
+        
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Wachtwoord" id="Password" required type="password"
+                            [(ngModel)]="password" name="password" #p="ngModel" color="primary">
+                        </mat-form-field>
+        
+                        <button mat-flat-button type="submit" color="primary" class="btn btn-success">Submit</button>
 
-                    <!-- <button mat-flat-button type="submit" color="primary" class="btn btn-success" [disabled]="!form.form.valid">Submit</button> -->
-                    <button mat-flat-button type="button" class="btn btn-cancel" (click)="cancel()">Cancel</button>
+                        <!-- <button mat-flat-button type="submit" color="primary" class="btn btn-success" [disabled]="!form.form.valid">Submit</button> -->
+                        <button mat-flat-button type="button" class="btn btn-cancel" (click)="cancel()">Cancel</button>
 
-                </form>
-                <button mat-flat-button type="button" class="btn btn-cancel" (click)="temp()">temp</button>
-
-
+                    </form>
+                    <button mat-flat-button type="button" class="btn btn-cancel" (click)="temp()">temp</button>
+                </div>
+                
+                <a href="/management/reset" style="color:#D4CC4C">Wachtwoord vergeten?</a>
             </div>
-
-            <a href="/management/reset" style="color:#D4CC4C">Wachtwoord vergeten?</a>
         </mat-card>
 
     </div>
-</body>
+</div>

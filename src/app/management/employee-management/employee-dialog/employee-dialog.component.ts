@@ -9,6 +9,8 @@ import { async } from '@angular/core/testing';
     styleUrls: [`employee-dialog.component.css`]
 })
 export class EmployeeDialogComponent {
+  loading = true;
+  progress = false;
   cancel: boolean;
   listData: MatTableDataSource<Employee>;
   employeelist: Employee[] = [];
@@ -20,12 +22,12 @@ export class EmployeeDialogComponent {
   }
 
   onSubmit(formValues) {
+    this.progress = true;
     if (this.cancel !== true) {
       if (formValues.firstname != null) {
         this.addEmployee(formValues.name, formValues.email, formValues.firstname);
-      } else {this.addWOname(formValues.name, formValues.email); }
-      this.snackBar.open('Nieuwe werknemer is opgeslagen.', '',
-       { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+      } else {
+        this.addWOname(formValues.name, formValues.email); }
     }
     this.dialogRef.close();
   }
@@ -33,15 +35,31 @@ export class EmployeeDialogComponent {
   addEmployee(name: string,  email: string, firstname: string, ) {
     const newEmployee: Employee = {name, firstname, email} as Employee;
     console.log(newEmployee);
-    this.service.addEmployee(newEmployee).subscribe();
+    this.service.addEmployee(newEmployee).subscribe(res => {
+      console.log(res);
+      if (res['id'] !== undefined) {
+        this.snackBar.open('Nieuwe werknemer is opgeslagen.', '', {
+          panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
+        });
+        this.progress = false;
+      }
+    });
   }
 
   addWOname(name: string, email: string) {
     const newEmployee: Employee = {name, email} as Employee;
     console.log(newEmployee);
-    this.service.addEmployee(newEmployee).subscribe();
+    this.service.addEmployee(newEmployee).subscribe(res => {
+      console.log(res);
+      if (res['id'] !== undefined) {
+        this.snackBar.open('Nieuwe werknemer is opgeslagen.', '', {
+          panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
+        });
+        this.progress = false;
+      }
+    });
   }
-  
+
   onCancel() {
     console.log('cancel')
     this.cancel = true;
@@ -89,6 +107,7 @@ export class EmployeeDialogComponent {
   }
 
   addList() {
+    this.progress = true;
     let count = 0
     var last = this.employeelist.length
 
@@ -102,6 +121,7 @@ export class EmployeeDialogComponent {
           this.snackBar.open(`U hebt ${count} nieuwe werknemer(s) toegevoegd.`, '',
             { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
           this.dialogRef.close();
+          this.progress = false;
         }
       });
       

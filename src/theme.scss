@@ -65,3 +65,16 @@ right: 2px;
 md-toast.md-success-toast-theme {
   background-color: blue;
 }
+
+.spinner { 
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-top: 10%;
+}
+
+.progressbar {
+  position: absolute;
+  width: 100%; 
+  top: 64px;
+}

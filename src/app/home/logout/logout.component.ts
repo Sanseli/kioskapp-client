@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Visitor } from 'src/app/shared/models';
 import { VisitorService } from 'src/app/shared/visitor.service';
@@ -14,27 +14,39 @@ import { formatDate } from '@angular/common';
 })
 export class LogoutComponent {
     visitors: Visitor[] = [];
+    progress = false;
+
+    @ViewChild('logoutForm') formValues;
 
     constructor(private router: Router, private route: ActivatedRoute,
         private visitorService: VisitorService, private dialog: MatDialog,
         private toastr: ToastrService, private snackBar: MatSnackBar ) {
         const d = formatDate(new Date, 'dd-MM-yyyy', 'en')
-        console.log(d)
         this.visitors = this.route.snapshot.data['visitorList'].filter(a => (a.loggedIn === 1 && a.day === d));
-        console.log(this.visitors);
-        
-
     }
 
     onSubmit(formValues) {
+        this.progress = true;
+
         const visitor = formValues.visitor;
         visitor.loggedIn = false;
-        console.log(visitor);
-        console.log(this.visitorService.updateVisitor(visitor).subscribe());
-        this.snackBar.open('Bedankt voor uw bezoek, u bent nu uitgelogd.', '', { panelClass: ['blue-snackbar'], 
-        verticalPosition: 'top', horizontalPosition: 'center'});
-        // this.deleteVisit(formValues.visitor);
-        this.router.navigate(['/home']);
+
+        console.log(this.visitorService.updateVisitor(visitor).subscribe(res => {
+            if (res['loggedIn'] === false) {
+                this.snackBar.open('Bedankt voor uw bezoek, u bent nu uitgelogd.', '', {
+                    panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
+                });
+                this.router.navigate(['/home']);
+                this.progress = false;
+
+            } else {
+                this.snackBar.open('Er is iets mis gegaan, probeer opnieuw.', '', {
+                    panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
+                });
+                this.progress = false;
+                this.formValues.resetForm();
+            }
+        }));
     }
 
     cancel() {

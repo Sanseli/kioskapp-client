@@ -12,12 +12,12 @@ import { DialogComponent } from 'src/app/shared/dialog-component/dialog.componen
     styleUrls: [`employee-management.component.css`]
 })
 export class EmployeeManagementComponent {
+  loading = true;
 
   employees: Employee[];
   listData: MatTableDataSource<Employee>;
   displayedColumns = ['name', 'firstname', 'email', 'actions'];
   searchKey: string;
-
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -67,7 +67,7 @@ export class EmployeeManagementComponent {
     const dialogRef = this.dialog.open(EmployeeEditDialogComponent, dialogConfig);
   }
 
-  deleteEmployee(employee) {
+  delete(employee) {
     let dialogres = '';
 
     const dialogConfig = new MatDialogConfig();
@@ -77,39 +77,50 @@ export class EmployeeManagementComponent {
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-        dialogres = `${result}`;
-
-        if (dialogres === 'yes') {
-          let result: any;
-          this.emplService.deleteEmployee(employee.id).subscribe(res => {
-            result = res;
-            if (res === 204) {
-              if (employee.user_token !== null) {
-                console.log("notnull")
-                let user: User;
-                let userjson;
-                this.authService.details(employee.user_token).subscribe(res => {
-                  console.log(res);
-                  userjson = res['success'];
-                  setTimeout(() => {
-                    if (userjson !== undefined) {
-                    console.log(userjson)
-                    let name = userjson['name']; let email = userjson['email']; let id = userjson['id'];
-                    user = { name, email, id } as User;
-                    setTimeout(() => {
-                      this.authService.delete(user).subscribe(res => {console.log(res)})                     
-                    }, 300);
-                    }
-                  }, 300);
-                })
-
-              }
-              this.snackBar.open(`Werknemer ${employee.firstname} ${employee.name} is verwijderd.`, '',
-                  { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
-              this.loadData();
-            }
-          })        
+      dialogres = `${result}`;
+      if (dialogres === 'yes') {
+        if (employee.user_token !== null) {
+          console.log('notnull');
+          this.deleteUser(employee);
+        } else {
+          this.deleteEmployee(employee);
         }
+      } else {
+      }
+    });
+  }
+
+  deleteUser(employee){
+    let user: User;
+    let userjson;
+    this.authService.details(employee.user_token).subscribe(res => {
+      console.log(res);
+      userjson = res['success'];
+      setTimeout(() => {
+        if (userjson !== undefined) {
+        console.log(userjson);
+        const name = userjson['name']; const email = userjson['email']; const id = userjson['id'];
+        user = { name, email, id } as User;
+        setTimeout(() => {
+          this.authService.delete(user).subscribe(res => {
+            console.log(res);
+            this.deleteEmployee(employee);
+          })
+        }, 100);
+        }
+      }, 0);
+    });
+  }
+  deleteEmployee(employee) {
+    console.log(employee)
+    let result: any;
+    this.emplService.deleteEmployee(employee.id).subscribe(res => {
+      result = res;
+      if (res === 204) {
+        this.snackBar.open(`Werknemer ${employee.firstname} ${employee.name} is verwijderd.`, '',
+            { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+        this.loadData();
+      }
     });
   }
 
@@ -121,7 +132,7 @@ export class EmployeeManagementComponent {
 
   }
 
-  
+
  }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeeService } from 'src/app/shared/employee.service';
 import { Employee, Visitor} from 'src/app/shared/models';
@@ -14,9 +14,12 @@ import { DialogComponent } from 'src/app/shared/dialog-component/dialog.componen
 })
 export class LoginPrivateComponent {
   isDirty = true;
+  progress = false;
 
   employees: Employee[];
   visitors: Visitor[] = [];
+
+  @ViewChild('loginForm') formValues;
 
   constructor(private visitorService: VisitorService,
     private router: Router, private emplservice: EmployeeService, private route: ActivatedRoute,
@@ -24,19 +27,14 @@ export class LoginPrivateComponent {
     this.employees = this.route.snapshot.data['employeeList'];
   }
 
-  openSnackBar() {
-    this.snackBar.open('Login is opgeslagen', '', { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
-  }
-
   onSubmit(formValues) {
+    this.progress = true;
+
     const date = new Date();
     const formattedDate = formatDate(date, 'dd-MM-yyyy', 'en');
 
     this.addVisitor(formValues.lastName, formValues.firstName, formValues.email,
       formattedDate, formValues.reason, formValues.appointmentWith.id, true, formValues.phone);
-
-    this.openSnackBar();
-    this.router.navigate(['/home']);
   }
 
   cancel() {
@@ -50,8 +48,25 @@ export class LoginPrivateComponent {
   addVisitor(name: string, firstname: string, email: string, day: string, subject: string, employee_id: number,
     loggedIn: boolean, telnr?: string): void {
     const newVisitor: Visitor = {name, firstname, email, telnr,  day, subject, employee_id, loggedIn} as Visitor;
-    console.log(newVisitor);
-    this.visitorService.addVisitor(newVisitor).subscribe((res) => { console.log(res)});
+
+    this.visitorService.addVisitor(newVisitor).subscribe((res) => {
+      console.log(res);
+
+      if (res['id'] !== undefined) {
+        this.progress = false;
+        this.snackBar.open('Login is opgeslagen', '', {
+          panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
+        });
+        this.router.navigate(['/home']);
+
+      } else {
+        this.snackBar.open('Er is iets mis gegaan, probeer opnieuw.', '', {
+          panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
+        });
+        this.progress = false;
+        this.formValues.resetForm();
+      }
+    });
   }
 
   openDialog(mes: string) {
@@ -64,11 +79,12 @@ export class LoginPrivateComponent {
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-        dialogres = `${result}`;
+      dialogres = `${result}`;
 
-        if (dialogres === 'yes') {
-            this.router.navigate(['/home']);
-        }
+      if (dialogres === 'yes') {
+        this.router.navigate(['/home']);
+      }
+
     });
   }
 }

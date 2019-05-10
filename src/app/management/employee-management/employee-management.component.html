@@ -1,54 +1,61 @@
-  <body>
-      <div class="container">
+<!-- <div class="spinner" [hidden]="!loading">
+    <mat-spinner></mat-spinner>
+</div> -->
 
-          <div class="example-container mat-elevation-z8">
-            <button mat-button (click)="back()" class="back"><mat-icon>keyboard_return</mat-icon></button>
-            <div class="search-div">
-                <mat-form-field class="search-form-field" floatLabel="never">
-                  <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
-                  <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey" (click)="onSearchClear()">
-                    <mat-icon>close</mat-icon>
-                  </button>
-                </mat-form-field>
-                <button mat-flat-button (click)="onCreate()"><mat-icon>add</mat-icon></button>
-            </div>
-              
-              <mat-table [dataSource]="listData" matSort>
-            
-                <ng-container matColumnDef="id">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
-                  <mat-cell *matCellDef="let employee"> {{employee.id}} </mat-cell>
-                </ng-container>
-            
-                <ng-container matColumnDef="name">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-                  <mat-cell *matCellDef="let employee"> {{employee.name}} </mat-cell>
-                </ng-container>
+<div class="progressbar" [hidden]="!progress">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
 
-                <ng-container matColumnDef="firstname">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Firstname </mat-header-cell>
-                    <mat-cell *matCellDef="let employee"> {{employee.firstname}} </mat-cell>
-                </ng-container>
-            
-                <ng-container matColumnDef="email">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
-                  <mat-cell *matCellDef="let employee"> {{employee.email}} </mat-cell>
-                </ng-container>
+<div>
+  <div class="container">
+      <div class="example-container mat-elevation-z8">
+        <button mat-button (click)="back()" class="back"><mat-icon>keyboard_return</mat-icon></button>
+        <div class="search-div">
+            <mat-form-field class="search-form-field" floatLabel="never">
+              <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+              <button mat-button matSuffix mat-icon-button aria-label="Clear"*ngIf="searchKey" (click)="onSearchClear()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <button mat-flat-button (click)="onCreate()"><mat-icon>add</mat-icon></button>
+        </div>
+          
+          <mat-table [dataSource]="listData" matSort >
+        
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> ID</mat-header-cell>
+              <mat-cell *matCellDef="let employee"> {{employee.id}} </mat-cell>
+            </ng-container>
+        
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+              <mat-cell *matCellDef="let employee"> {{employee.name}} </mat-cell>
+            </ng-container>
 
-                <ng-container matColumnDef="actions">
-                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                  <mat-cell *matCellDef="let row">
-                    <button mat-icon-button (click)="editEmployee(row)"><mat-icon>edit</mat-icon></button>
-                    <button mat-icon-button color="warn" (click)="deleteEmployee(row)"><mat-icon>delete_outline</mat-icon></button>
-                  </mat-cell>
-                </ng-container>
-                
-                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
-              </mat-table>
-            </div>
-      </div>
-  </body>
+            <ng-container matColumnDef="firstname">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Firstname </mat-header-cell>
+                <mat-cell *matCellDef="let employee"> {{employee.firstname}} </mat-cell>
+            </ng-container>
+        
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+              <mat-cell *matCellDef="let employee"> {{employee.email}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="editEmployee(row)"><mat-icon>edit</mat-icon></button>
+                <button mat-icon-button color="warn" (click)="delete(row)"><mat-icon>delete_outline</mat-icon></button>
+              </mat-cell>
+            </ng-container>
+            
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
+          </mat-table>
+        </div>
+  </div>
+</div>
 
 
 

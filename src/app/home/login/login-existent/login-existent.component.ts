@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { VisitorService, Visitor } from 'src/app/shared';
 import { Router, ActivatedRoute } from '@angular/router';
 import { formatDate } from '@angular/common';
@@ -11,6 +11,9 @@ import { MatDialog, MatDialogConfig, MatSnackBar } from 'src/app/material';
 })
 export class LoginExistentComponent {
     visitors: Visitor[];
+    progress = false;
+
+    @ViewChild('loginForm') formValues;
 
     constructor(private visitorService: VisitorService, private router: Router, 
         private route: ActivatedRoute, private dialog: MatDialog, private snackBar: MatSnackBar) {
@@ -19,15 +22,29 @@ export class LoginExistentComponent {
             console.log(this.visitors)
     }
 
-
     onSubmit(formValues) {
+        this.progress = true;
         const app: Visitor = formValues.visitor;
         app.loggedIn = true;
         console.log(app);
-        this.visitorService.updateVisitor(app).subscribe();
-        this.snackBar.open('Login is opgeslagen', '', { panelClass: ['blue-snackbar'], 
-        verticalPosition: 'top', horizontalPosition: 'center'});
-        this.router.navigate(['/home']);
+        this.visitorService.updateVisitor(app).subscribe(res => {
+            console.log(res);
+
+            if (res['loggedIn'] === true) {
+                this.snackBar.open('Login is opgeslagen', '', {
+                    panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
+                });
+                this.router.navigate(['/home']);
+                this.progress = false;
+
+            } else {
+                this.snackBar.open('Er is iets mis gegaan, probeer opnieuw.', '', {
+                    panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
+                });
+                this.progress = false;
+                this.formValues.resetForm();
+            }
+        });
     }
 
     cancel() {

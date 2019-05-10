@@ -1,17 +1,24 @@
 form { padding: 2%;}
 
 .container {
-    height: 650px;
+    height: 670px;
     width: 500px;
+    overflow: hidden;
+}
+
+#spin {
+    padding: 2%;
+    width: 100%; 
+    right: 10%;
 }
 
 button {
-    margin: 16px 8px;
+    margin: 16px 8px 0px;
 }
 
 mat-form-field { width: 100%; }
 
-.button-row {float: right; bottom: 5%;}
+.button-row {float: right; bottom: 10%;}
 
 mat-divider { margin-bottom: 30px; }
 
@@ -20,3 +27,8 @@ mat-divider { margin-bottom: 30px; }
 }
 
 .buttons { float: right; }
+
+
+.progressbar {
+    position: relative;
+}

@@ -1,86 +1,90 @@
 <div class="container">
-
-  <div class="buttons">
-    <button mat-icon-button (click)="toggleEdit()" [disabled]="edit"><mat-icon >edit</mat-icon></button>
-    <button mat-icon-button (click)="close()"><mat-icon >close</mat-icon></button>
+  <div class="spinner" [hidden]="!loading" >
+      <mat-spinner id="spin"></mat-spinner>
   </div>
 
-  <form (ngSubmit)="onSubmit(employeeForm.value)" #employeeForm="ngForm">
+  <div [hidden]="loading">
+    <div class="buttons">
+      <button mat-icon-button (click)="toggleEdit()" [disabled]="edit"><mat-icon >edit</mat-icon></button>
+      <button mat-icon-button (click)="close()"><mat-icon >close</mat-icon></button>
+    </div>
 
-    <div class="form-group">
-      <mat-form-field>
-        <input  matInput placeholder="Naam" mat-form-field id="name" [readonly]="!edit"
-          required [(ngModel)]="employeeEdit.name" name="name" #n="ngModel">
-        <mat-error *ngIf="n.invalid && (n.dirty || n.touched)" color="warn">Geef een geldige naam in a.u.b.</mat-error>
-      </mat-form-field>
+    <form (ngSubmit)="onSubmit(employeeForm.value)" #employeeForm="ngForm">
 
-      <mat-form-field>
-          <input matInput placeholder="Voornaam" mat-form-field type="text"  id="firstname" [readonly]="!edit"
-            [(ngModel)]="employeeEdit.firstname" name="firstname" #fn="ngModel">
-          <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
+      <div class="form-group">
+        <mat-form-field>
+          <input  matInput placeholder="Naam" mat-form-field id="name" [readonly]="!edit"
+            required [(ngModel)]="employeeEdit.name" name="name" #n="ngModel">
+          <mat-error *ngIf="n.invalid && (n.dirty || n.touched)" color="warn">Geef een geldige naam in a.u.b.</mat-error>
         </mat-form-field>
-    </div>
 
-    <div class="form-group">
-      <mat-form-field>
-        <input matInput placeholder="E-mail" mat-form-field type="email"  id="email" [readonly]="!edit"
-          required [(ngModel)]="employeeEdit.email" name="email" #em="ngModel">
-        <mat-error *ngIf="em.invalid && (em.dirty || em.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
-      </mat-form-field>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <div class="usercon">
-      <div *ngIf="(!userexist) && edit">
-        <button mat-raised-button (click)="newUser()">Maak login</button>
-      </div>
-  
-      <div *ngIf=" userexist || newuser">
-  
-        <div class="form-group">
-          <mat-form-field >
-            <input matInput placeholder="Gebruikersnaam" mat-form-field type="text"  id="username" readonly
-              required [(ngModel)]="userEdit.name" name="username" #un="ngModel">
-              <mat-error *ngIf="un.invalid && (un.dirty || un.touched)" color="warn">Geef een geldige gebruikersnaam in a.u.b.</mat-error>
+        <mat-form-field>
+            <input matInput placeholder="Voornaam" mat-form-field type="text"  id="firstname" [readonly]="!edit"
+              [(ngModel)]="employeeEdit.firstname" name="firstname" #fn="ngModel">
+            <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
           </mat-form-field>
-        </div>
-        
-        <div *ngIf="userexist && !editp && edit && !newuser">
-          <!--<button mat-raised-button (click)="editpass()">Verander wachtwoord</button>-->
-          <button mat-raised-button (click)="deleteUser()">Verwijder user</button>
-        </div>
+      </div>
 
-        <div *ngIf="!userexist || editp || newuser">
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput placeholder="E-mail" mat-form-field type="email"  id="email" [readonly]="!edit"
+            required [(ngModel)]="employeeEdit.email" name="email" #em="ngModel">
+          <mat-error *ngIf="em.invalid && (em.dirty || em.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
+        </mat-form-field>
+      </div>
 
+      <mat-divider></mat-divider>
+
+      <div class="usercon">
+        <div *ngIf="(!userexist) && edit">
+          <button mat-raised-button (click)="newUser()">Maak login</button>
+        </div>
+    
+        <div *ngIf=" userexist || newuser">
+    
           <div class="form-group">
             <mat-form-field >
-              <input matInput placeholder="Wachtwoord" mat-form-field type="password"  id="password" 
-                required [(ngModel)]="userEdit.password" name="password" #pass="ngModel" reverse="true">
-                <mat-error *ngIf="pass.invalid && (pass.dirty || pass.touched)" color="warn">Geef een geldig wachtwoord in a.u.b.</mat-error>
+              <input matInput placeholder="Gebruikersnaam" mat-form-field type="text"  id="username" [readonly]="!edit"
+                required [(ngModel)]="userEdit.name" name="username" #un="ngModel">
+                <mat-error *ngIf="un.invalid && (un.dirty || un.touched)" color="warn">Geef een geldige gebruikersnaam in a.u.b.</mat-error>
             </mat-form-field>
           </div>
           
-          <div class="form-group">
-            <mat-form-field >
-              <input matInput placeholder="Wachtwoord herhalen" type="password"  id="c_password"
-                  required [(ngModel)]="userEdit.c_password" name="c_password" #c_pass="ngModel">
-                  <mat-error *ngIf="c_pass.invalid && (c_pass.dirty || c_pass.touched)" color="warn">Herhaal het wachtwoord a.u.b.</mat-error>
-            </mat-form-field>
+          <div *ngIf="userexist && !editp && edit && !newuser">
+            <button mat-raised-button (click)="deleteUser()">Verwijder user</button>
           </div>
 
-        </div>
+          <div *ngIf="!userexist || editp || newuser">
 
+            <div class="form-group">
+              <mat-form-field >
+                <input matInput placeholder="Wachtwoord" mat-form-field type="password"  id="password" 
+                  required [(ngModel)]="userEdit.password" name="password" #pass="ngModel" reverse="true">
+                  <mat-error *ngIf="pass.invalid && (pass.dirty || pass.touched)" color="warn">Geef een geldig wachtwoord in a.u.b.</mat-error>
+              </mat-form-field>
+            </div>
+            
+            <div class="form-group">
+              <mat-form-field >
+                <input matInput placeholder="Wachtwoord herhalen" type="password"  id="c_password"
+                    required [(ngModel)]="userEdit.c_password" name="c_password" #c_pass="ngModel">
+                    <mat-error *ngIf="c_pass.invalid && (c_pass.dirty || c_pass.touched)" color="warn">Herhaal het wachtwoord a.u.b.</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>        
       </div>
-      
-    </div>
-    
 
-    <div class="button-row">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.form.valid || !edit">Submit</button>
-      <button mat-raised-button color="warn" (click)="onCancel()" [disabled]="!edit">Cancel</button>
-    </div>
+      <div class="button-row">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.form.valid || !edit">Submit</button>
+        <button mat-raised-button color="warn" (click)="onCancel()" [disabled]="!edit">Cancel</button>
+      </div>
 
-  </form>
+      <div class="progressbar" [hidden]="!progress">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
 
+    </form>
+
+  </div>
 </div>

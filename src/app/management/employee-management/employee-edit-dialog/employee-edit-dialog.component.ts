@@ -13,6 +13,8 @@ import { DialogComponent } from 'src/app/shared/dialog-component/dialog.componen
     styleUrls: [`employee-edit-dialog.component.css`]
 })
 export class EmployeeEditDialogComponent {
+  loading = true;
+  progress = false;
   cancel: boolean;
   edit = false;
   isDirty = true;
@@ -44,21 +46,24 @@ export class EmployeeEditDialogComponent {
           let name = userjson['name']; let email = userjson['email']; let id = userjson['id'];
           this.user = { name, email, id } as User;
           this.userEdit = Object.assign({}, this.user);
-          console.log(this.userEdit)
+          console.log(this.userEdit);
           this.userexist = true;
           }
-        }, 300);
+        }, 0);
+        this.loading = false;
       });
 
     } else {
       console.log('no user');
       this.userexist = false;
+      this.loading = false;
     }
     this.employeeEdit = {name, firstname, email} as Employee;
     console.log(this.employeeEdit);
   }
 
   onSubmit() {
+    this.progress = true;
     console.log(this.del)
     if (this.cancel !== true) {
 
@@ -92,6 +97,7 @@ export class EmployeeEditDialogComponent {
 
                     this.edit = false;
                     this.newuser = false;
+                    this.progress = false;
                   });
 
                 } else {
@@ -116,6 +122,7 @@ export class EmployeeEditDialogComponent {
       this.snackBar.open('Uw wijzigingen zijn opgeslagen.', '',
       { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
       this.edit = false;
+      this.progress = false;
     });
   }
 
