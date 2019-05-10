@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Employee } from 'src/app/shared';
+import { Employee, AuthService, User } from 'src/app/shared';
 import { EmployeeService } from 'src/app/shared/employee.service';
 import { MatSort, MatTableDataSource, MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar } from '@angular/material';
 import { EmployeeDialogComponent } from './employee-dialog/employee-dialog.component';
@@ -18,10 +18,12 @@ export class EmployeeManagementComponent {
   displayedColumns = ['name', 'firstname', 'email', 'actions'];
   searchKey: string;
 
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private emplService: EmployeeService, private router: Router,
-    public dialog: MatDialog, private route: ActivatedRoute, private snackBar: MatSnackBar) {
+    public dialog: MatDialog, private route: ActivatedRoute, private snackBar: MatSnackBar,
+    private authService: AuthService) {
     this.employees = this.route.snapshot.data['employeeList'];
     this.listData = new MatTableDataSource(this.employees);
   }
@@ -78,11 +80,35 @@ export class EmployeeManagementComponent {
         dialogres = `${result}`;
 
         if (dialogres === 'yes') {
-          if (this.emplService.deleteEmployee(employee.id).subscribe()) {
-            this.snackBar.open(`Werknemer ${employee.firstname} ${employee.name} is verwijderd.`, '',
-                { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
-            this.loadData();
-          }
+          let result: any;
+          this.emplService.deleteEmployee(employee.id).subscribe(res => {
+            result = res;
+            if (res === 204) {
+              if (employee.user_token !== null) {
+                console.log("notnull")
+                let user: User;
+                let userjson;
+                this.authService.details(employee.user_token).subscribe(res => {
+                  console.log(res);
+                  userjson = res['success'];
+                  setTimeout(() => {
+                    if (userjson !== undefined) {
+                    console.log(userjson)
+                    let name = userjson['name']; let email = userjson['email']; let id = userjson['id'];
+                    user = { name, email, id } as User;
+                    setTimeout(() => {
+                      this.authService.delete(user).subscribe(res => {console.log(res)})                     
+                    }, 300);
+                    }
+                  }, 300);
+                })
+
+              }
+              this.snackBar.open(`Werknemer ${employee.firstname} ${employee.name} is verwijderd.`, '',
+                  { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+              this.loadData();
+            }
+          })        
         }
     });
   }
@@ -94,6 +120,8 @@ export class EmployeeManagementComponent {
   openDialog(mes: string) {
 
   }
+
+  
  }
 
 

@@ -47,7 +47,7 @@
         </div>
         
         <div *ngIf="userexist && !editp && edit && !newuser">
-          <button mat-raised-button (click)="editpass()">Verander wachtwoord</button>
+          <!--<button mat-raised-button (click)="editpass()">Verander wachtwoord</button>-->
           <button mat-raised-button (click)="deleteUser()">Verwijder user</button>
         </div>
 
@@ -79,9 +79,6 @@
     <div class="button-row">
       <button mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.form.valid || !edit">Submit</button>
       <button mat-raised-button color="warn" (click)="onCancel()" [disabled]="!edit">Cancel</button>
-
-
-
     </div>
 
   </form>

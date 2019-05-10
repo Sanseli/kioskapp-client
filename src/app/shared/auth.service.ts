@@ -57,7 +57,12 @@ export class AuthService {
     changePass(user: User): Observable<User> {
         return this.http
         .post<User>(`api/password/reset`, user)
-        .pipe(catchError(this.handleError('changePass', user)));
+        //.pipe(catchError(this.handleError('changePass', user)));
+    }
+
+    findPassChange(token): Observable<{}> {
+        return this.http
+        .get(`api/password/find/${token}`)
     }
 
 }

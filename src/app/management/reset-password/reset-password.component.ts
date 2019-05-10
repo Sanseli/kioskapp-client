@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/shared';
 import { MatSnackBar } from 'src/app/material';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-reset-password',
@@ -8,7 +9,7 @@ import { MatSnackBar } from 'src/app/material';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
-
+  @ViewChild('form') formValues;
   constructor(private auth: AuthService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -18,11 +19,21 @@ export class ResetPasswordComponent implements OnInit {
     if (formValues.email !== undefined) {
       const email: String = formValues.email;
       console.log(email)
-      this.auth.reset(email).subscribe((res) => {console.log(res); });
+      this.auth.reset(email).subscribe((res) => {
+        console.log(res['message'])
+        if (res['message'] === undefined) {
+          this.snackBar.open('Controlleer het e-mail adres a.u.b.', '',
+          { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+        } else {
+          this.snackBar.open(res['message'], '',
+          { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+        }
+      });
     } else {
       this.snackBar.open('Vul een e-mail adres in a.u.b.', '',
       { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
     }
+    this.formValues.resetForm();
   }
 
 }

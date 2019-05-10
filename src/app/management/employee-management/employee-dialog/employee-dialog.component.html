@@ -1,28 +1,72 @@
 <div class="container">
-  <form (ngSubmit)="onSubmit(employeeForm.value)" #employeeForm="ngForm">
-    <div class="form-group">
-      <mat-form-field>
-        <input matInput placeholder="Naam" mat-form-field type="text"  id="name"
-          required [(ngModel)]="name" name="name" #n="ngModel">
-        <mat-error *ngIf="n.invalid && (n.dirty || n.touched)" color="warn">Geef een geldige naam in a.u.b.</mat-error>
-      </mat-form-field>
-  
-      <mat-form-field>
-          <input matInput placeholder="firstname" mat-form-field type="text"  id="firstname"
-            [(ngModel)]="firstname" name="firstname" #fn="ngModel">
-          <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group">
-      <mat-form-field>
-        <input matInput placeholder="email" mat-form-field type="email"  id="email"
-          required [(ngModel)]="email" name="email" #em="ngModel">
-          <mat-error *ngIf="em.invalid && (em.dirty || em.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="button-row">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.form.valid">Submit</button>
-      <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-    </div>
-  </form>
+    <mat-tab-group>
+
+        <mat-tab label="Handmatig">
+          <div class="fullwidth">
+            <form (ngSubmit)="onSubmit(employeeForm.value)" #employeeForm="ngForm">
+                <div class="form-group">
+                  <mat-form-field>
+                    <input matInput placeholder="Naam" mat-form-field type="text"  id="name"
+                      required [(ngModel)]="name" name="name" #n="ngModel">
+                    <mat-error *ngIf="n.invalid && (n.dirty || n.touched)" color="warn">Geef een geldige naam in a.u.b.</mat-error>
+                  </mat-form-field>
+              
+                  <mat-form-field>
+                      <input matInput placeholder="firstname" mat-form-field type="text"  id="firstname"
+                        [(ngModel)]="firstname" name="firstname" #fn="ngModel">
+                      <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched)" color="warn">Geef een geldige voornaam in a.u.b.</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field>
+                    <input matInput placeholder="email" mat-form-field type="email"  id="email"
+                      required [(ngModel)]="email" name="email" #em="ngModel">
+                      <mat-error *ngIf="em.invalid && (em.dirty || em.touched)" color="warn">Geef een geldig e-mail adres in a.u.b.</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="button-row">
+                  <button mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.form.valid">Toevoegen</button>
+                  <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+                </div>
+              </form>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="CSV">
+            <div class="fullwidth">
+              <label>Upload een CSV bestand: </label><br/>
+              <input type="file" class="upload" (change)="changeListener($event.target.files)">
+            </div>
+
+            <div *ngIf="listFilled">
+              <div class="table">
+                <mat-table [dataSource]="listData" matSort *ngIf="listFilled">
+              
+                  <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                    <mat-cell *matCellDef="let employee"> {{employee.name}} </mat-cell>
+                  </ng-container>
+
+                  <ng-container matColumnDef="firstname">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Firstname </mat-header-cell>
+                      <mat-cell *matCellDef="let employee"> {{employee.firstname}} </mat-cell>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="email">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                    <mat-cell *matCellDef="let employee"> {{employee.email}} </mat-cell>
+                  </ng-container>
+                  
+                  <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>>
+                </mat-table>
+              </div>
+
+              <div class="button-row sticky-bottom">
+                <button mat-raised-button color="primary" (click)="addList()">Toevoegen</button>
+                <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+              </div>
+            </div>
+        </mat-tab>
+      </mat-tab-group>  
 </div>

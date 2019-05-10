@@ -1,8 +1,8 @@
 form { padding: 2%;}
 
 .container {
-    height: 300px;
-    width: 500px;
+    height: 500px;
+    width: 700px;
 }
 
 button {
@@ -11,4 +11,19 @@ button {
 
 mat-form-field { width: 100%; }
 
-.button-row {float: right;}
+.button-row {
+    float: right; 
+    position: absolute;
+    bottom: 0;
+}
+
+
+.fullwidth {
+    width: 100%;
+    overflow-x: hidden;
+}    
+
+mat-table { height: 300px; overflow: auto; }
+
+
+

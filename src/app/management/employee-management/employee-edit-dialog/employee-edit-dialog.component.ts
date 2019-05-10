@@ -1,11 +1,12 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, ErrorStateMatcher, MatTableDataSource } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, 
+  ErrorStateMatcher, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { AuthService, EmployeeService, Employee, User } from 'src/app/shared';
 import { jsonpCallbackContext } from '@angular/common/http/src/module';
 import { ObserversModule } from '@angular/cdk/observers';
 import { Observable, observable } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { DialogComponent } from 'src/app/shared/dialog-component/dialog.component';
 
 @Component ({
     templateUrl: 'employee-edit-dialog.component.html',
@@ -24,24 +25,29 @@ export class EmployeeEditDialogComponent {
   alerts: any;
   users: User[];
   editp: boolean;
+  del: boolean;
 
   constructor(public service: EmployeeService, public dialogRef: MatDialogRef<EmployeeEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, private snackBar: MatSnackBar, private authService: AuthService,
-    private router: Router) {
+    private router: Router, public dialog: MatDialog) {
     this.employee = data.employee;
     const name = this.employee.name; const firstname = this.employee.firstname; const email = this.employee.email;
-
+    this.del = false;
     if (this.employee.user_token !== null) {
       let userjson: any;
       this.authService.details(this.employee.user_token).subscribe(res => {
         console.log(res);
         userjson = res['success'];
-        console.log(userjson)
-        let name = userjson['name']; let email = userjson['email']; let id = userjson['id'];
-        this.user = { name, email, id } as User;
-        this.userEdit = Object.assign({}, this.user);
-        console.log(this.userEdit)
-        this.userexist = true;
+        setTimeout(() => {
+          if (userjson !== undefined) {
+          console.log(userjson)
+          let name = userjson['name']; let email = userjson['email']; let id = userjson['id'];
+          this.user = { name, email, id } as User;
+          this.userEdit = Object.assign({}, this.user);
+          console.log(this.userEdit)
+          this.userexist = true;
+          }
+        }, 300);
       });
 
     } else {
@@ -53,62 +59,54 @@ export class EmployeeEditDialogComponent {
   }
 
   onSubmit() {
+    console.log(this.del)
     if (this.cancel !== true) {
 
-      this.employee.name = this.employeeEdit.name;
-      this.employee.firstname = this.employeeEdit.firstname;
-      this.employee.email = this.employeeEdit.email;
+      if (this.del === false) {
 
-     // if (this.userexist === true) {
+        this.employee.name = this.employeeEdit.name;
+        this.employee.firstname = this.employeeEdit.firstname;
+        this.employee.email = this.employeeEdit.email;
 
-        if (this.newuser === true) {
-          let result;
-          console.log("newuser")
-          this.authService.register(this.userEdit)
-            .subscribe(res => { 
-              result = res['success']; 
-              if (result !== undefined) {
-                console.log('fksefkjsenf', result)
-                let token = result['token'];
-                console.log(token);
-                this.employee.user_token = token;
+          if (this.newuser === true) {
+            let result;
+            console.log("newuser")
+            this.authService.register(this.userEdit)
+              .subscribe(res => { 
+                result = res['success']; 
+                if (result !== undefined) {
+                  console.log('fksefkjsenf', result)
+                  let token = result['token'];
+                  console.log(token);
+                  this.employee.user_token = token;
 
-                setTimeout(() => {
-                  this.updateEmployee();
-                }, 300);
+                  setTimeout(() => {
+                    this.updateEmployee();
+                  }, 300);
 
-                this.authService.details(result['token']).subscribe(res => {
-                  console.log(res);
+                  this.authService.details(result['token']).subscribe(res => {
+                    console.log(res);
 
-                  this.snackBar.open('User is opgeslagen.', '',
-                  { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+                    this.snackBar.open('User is opgeslagen.', '',
+                    { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
 
-                  this.edit = false;
-                  this.newuser = false;
-                });
+                    this.edit = false;
+                    this.newuser = false;
+                  });
 
-              } else {
-                console.log('ksfkesfnkj')
-                this.snackBar.open('User is niet opgeslagen, controlleer het wachtwoord a.u.b.', '',
-                  { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
-              }
-            });
-
+                } else {
+                  console.log('ksfkesfnkj')
+                  this.snackBar.open('User is niet opgeslagen, controlleer het wachtwoord a.u.b.', '',
+                    { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+                }
+              });
         } else {
-        // else {
-
-        //   setTimeout(() => {
-        //     this.updateEmployee();
-        //     this.updateUser();
-        //   }, 300);
-        // }
-      //} else {
 
         setTimeout(() => {
           this.updateEmployee();
         }, 300);
       }
-
+      }
     }
   }
 
@@ -177,8 +175,24 @@ export class EmployeeEditDialogComponent {
   }
 
   deleteUser() {
-    this.authService.delete(this.user).subscribe((ref) => {console.log(ref)});
-    this.userexist = false;
-    this.newuser = false;
+    this.del = true;
+    let dialogres = '';
+
+    const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = { message: 'Weet u zeker dat u deze user wilt verwijderen?' };
+        const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(result => {
+            dialogres = `${result}`;
+
+            if (dialogres === 'yes') {
+              this.authService.delete(this.user).subscribe((ref) => {console.log(ref)});
+              this.userexist = false;
+              this.newuser = false;
+              console.log("dosefhosief");
+            }
+        });
   }
 }
