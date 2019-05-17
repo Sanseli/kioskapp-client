@@ -1,8 +1,6 @@
 import { Component, Injectable, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatDialogRef, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { Employee, EmployeeService } from 'src/app/shared';
-import { first, count } from 'rxjs/operators';
-import { async } from '@angular/core/testing';
 
 @Component ({
     templateUrl: 'employee-dialog.component.html',
