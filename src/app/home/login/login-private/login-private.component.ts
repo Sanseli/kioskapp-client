@@ -50,8 +50,6 @@ export class LoginPrivateComponent {
     const newVisitor: Visitor = {name, firstname, email, telnr,  day, subject, employee_id, loggedIn} as Visitor;
 
     this.visitorService.addVisitor(newVisitor).subscribe((res) => {
-      console.log(res);
-
       if (res['id'] !== undefined) {
         this.progress = false;
         this.snackBar.open('Login is opgeslagen', '', {

@@ -19,16 +19,13 @@ export class LoginExistentComponent {
         private route: ActivatedRoute, private dialog: MatDialog, private snackBar: MatSnackBar) {
             const formattedDate = formatDate(new Date(), 'dd-MM-yyyy', 'en');
             this.visitors = this.route.snapshot.data['visitorList'].filter(a => (a.loggedIn === 0 && a.day === formattedDate));
-            console.log(this.visitors)
     }
 
     onSubmit(formValues) {
         this.progress = true;
         const app: Visitor = formValues.visitor;
         app.loggedIn = true;
-        console.log(app);
         this.visitorService.updateVisitor(app).subscribe(res => {
-            console.log(res);
 
             if (res['loggedIn'] === true) {
                 this.snackBar.open('Login is opgeslagen', '', {

@@ -18,9 +18,7 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit(formValues) {
     if (formValues.email !== undefined) {
       const email: String = formValues.email;
-      console.log(email)
       this.auth.reset(email).subscribe((res) => {
-        console.log(res['message'])
         if (res['message'] === undefined) {
           this.snackBar.open('Controlleer het e-mail adres a.u.b.', '',
           { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});

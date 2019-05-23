@@ -4,17 +4,14 @@ mat-card { width: 300px;
     margin-left: 35%;
     margin-right: 35%;
     text-align: center;
-    height: auto;
-    margin-bottom: 5%; }
+    height: auto;}
 
-.container { padding: 20px 30px; }
 
 .row { padding: 10%; }
 
 .img-responsive {
-    width: 28%;
-    max-width: 1700px;
+    /* width: 35%;
     height: auto;
-    padding-top: 1%;
+    padding-top: 1%; */
     margin-bottom: 0%;
-  }
+} 

@@ -30,8 +30,6 @@ export class HomeComponent {
                 this.router.navigate(['/login/existent']);
             } else if (dialogres === 'no') {
                 this.router.navigate(['/login']);
-            } else {
-                console.log(dialogres);
             }
         });
 

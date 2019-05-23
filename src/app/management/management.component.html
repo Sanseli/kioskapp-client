@@ -7,11 +7,12 @@
 </div>
 
 <div [hidden]="loading">
-    <div class="col-md-12 text-center h-75img ">
-        <img  src="assets/3it-tr.png"  class="img-responsive" alt="Responsive image" (load)="onLoad()">
-    </div>
+
 
     <div class="container allign-middle" >
+        <div class="col-md-12 text-center h-75img  ">
+            <img  src="assets/3it-tr.png"  class="img-responsive" alt="Responsive image" (load)="onLoad()">
+        </div>
         <mat-card>
             <div>
                 <div class="row" >
@@ -26,13 +27,13 @@
                             [(ngModel)]="password" name="password" #p="ngModel" color="primary">
                         </mat-form-field>
         
-                        <button mat-flat-button type="submit" color="primary" class="btn btn-success">Submit</button>
+                        <button mat-flat-button type="submit" color="primary" class="btn btn-success">Login</button>
 
                         <!-- <button mat-flat-button type="submit" color="primary" class="btn btn-success" [disabled]="!form.form.valid">Submit</button> -->
                         <button mat-flat-button type="button" class="btn btn-cancel" (click)="cancel()">Cancel</button>
 
                     </form>
-                    <button mat-flat-button type="button" class="btn btn-cancel" (click)="temp()">temp</button>
+                    <!--button mat-flat-button type="button" class="btn btn-cancel" (click)="temp()">temp</button-->
                 </div>
                 
                 <a href="/management/reset" style="color:#D4CC4C">Wachtwoord vergeten?</a>

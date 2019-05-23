@@ -56,14 +56,14 @@ export class AppointmentComponent {
             (this.listData = new MatTableDataSource(visitors.filter(function(visitor) {
                     return visitor.day === formattedDate;
             }))));
-            console.log(this.listData);
+
             this.onLoad();
 
         } else {
             this.listData = new MatTableDataSource(this.visitors.filter(function(visitor) {
                 return visitor.day === formattedDate;
             }));
-            console.log(this.listData);
+
             this.onLoad();
         }
     }
@@ -95,7 +95,6 @@ export class AppointmentComponent {
         const dialogRef = this.dialog.open(AppointmentDialogComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('load');
             this.loadData();
             setTimeout(() => {
                 this.listData.sort = this.sort;
@@ -112,7 +111,6 @@ export class AppointmentComponent {
     }
 
     filterLoggedIn() {
-        console.log('sfsef');
         this.listData = new MatTableDataSource(this.visitors.filter(function(visitor) {
             return visitor.loggedIn === false;
         }));
@@ -162,7 +160,6 @@ export class AppointmentComponent {
                 }
 
                 this.visitorService.updateVisitor(visitor).subscribe((res) => {
-                    console.log('updated', res);
                     this.loadData();
                 });
                 // setTimeout(() => {
@@ -172,21 +169,21 @@ export class AppointmentComponent {
         });
     }
 
-    deleteEmployee(employee) {
+    deleteAppointment(visitor) {
         let dialogres = '';
 
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        dialogConfig.data = { message: `Weet u zeker dat u ${employee.firstname} ${employee.name} wilt verwijderen uit de database?` };
+        dialogConfig.data = { message: `Weet u zeker dat u ${visitor.firstname} ${visitor.name} wilt verwijderen uit de database?` };
         const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe(result => {
             dialogres = `${result}`;
 
             if (dialogres === 'yes') {
-              if (this.employeeService.deleteEmployee(employee.id).subscribe()) {
-                this.snackBar.open(`Werknemer ${employee.firstname} ${employee.name} is verwijderd.`, '',
+              if (this.visitorService.deleteVisitor(visitor.id).subscribe()) {
+                this.snackBar.open(`Bezoeker ${visitor.firstname} ${visitor.name} is verwijderd.`, '',
                     { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
                 this.loadData();
               }
@@ -236,7 +233,6 @@ export class AppointmentComponent {
                     d.setDate(d.getDate() + 1);
                 }
                 setTimeout(() => {
-                    console.log(listVisitors);
                     this.makeTable(listVisitors, 
                         `Alle bezoekers tussen ${formatDate(this.first, 'dd-MM-yyyy', 'en')} en ${formatDate(this.last, 'dd-MM-yyyy', 'en')}`,
                         'addDate');
@@ -247,8 +243,6 @@ export class AppointmentComponent {
             const year = this.selectedDate.getFullYear();
             this.first = new Date(year, month, 1);
             this.last = new Date(year, month + 1, 0);
-            console.log(this.first.getDate());
-            console.log(this.last.getDate());
 
             for (let day = this.first.getDate(); day <= this.last.getDate(); day++) {
                 const d: Date = this.first;
@@ -257,7 +251,6 @@ export class AppointmentComponent {
                 });
                 listVisitors = listVisitors.concat(v);
                 d.setDate(d.getDate() + 1);
-                console.log(listVisitors);
             }
             setTimeout(() => {
                 this.makeTable(listVisitors, `Alle bezoeken van de maand ${formatDate(this.first, 'MMMM', 'en')}`, 'addDate');
@@ -267,7 +260,6 @@ export class AppointmentComponent {
 
     makeTable(listVisitors, title, type?) {
 
-        console.log(title);
         let columns;
         if (type === 'addDate') {
             columns = [{title: 'Dag', dataKey: 'date' }, { title: 'Naam', dataKey: 'name'}, {title: 'Voornaam', dataKey: 'firstname'},
@@ -299,7 +291,6 @@ export class AppointmentComponent {
             rows.push(row);
         }
 
-        console.log (rows);
         const doc = new jsPDF('p', 'pt');
         doc.setFontSize(22);
         doc.text(20, 20, title);
@@ -326,7 +317,6 @@ export class AppointmentComponent {
 
                 if (newMonth > 0) {
                     const lastDayPMonth = new Date(year, newMonth + 1, 0).getDate();
-                    console.log(lastDayPMonth);
                     newDay = lastDayPMonth - (diff - day);
 
                 } else {
@@ -338,7 +328,6 @@ export class AppointmentComponent {
 
             setTimeout(() => {
                 const lastMonday = new Date(newYear, newMonth, newDay);
-                console.log(lastMonday);
                 this.first = lastMonday;
             }, 300);
         } else { this.first = this.selectedDate }
@@ -372,7 +361,6 @@ export class AppointmentComponent {
 
             setTimeout(() => {
                 const f = new Date(newYear, newMonth, newDay);
-                console.log(f);
                 this.last = f;
             }, 300);
         } else { this.last = this.selectedDate; }

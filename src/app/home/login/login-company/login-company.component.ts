@@ -54,7 +54,6 @@ export class LoginCompanyComponent {
     const newVisitor: Visitor = {name, firstname, email, telnr, company, day, subject, employee_id, loggedIn} as Visitor;
 
     this.visitorService.addVisitor(newVisitor).subscribe(res => {
-      console.log(res)
       if (res['id'] !== undefined) {
         this.snackBar.open('Login is opgeslagen', '', {
           panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'

@@ -51,7 +51,6 @@ export class EmployeeManagementComponent {
 
   onCreate() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     const dialogRef = this.dialog.open(EmployeeDialogComponent, dialogConfig);
 
@@ -80,7 +79,6 @@ export class EmployeeManagementComponent {
       dialogres = `${result}`;
       if (dialogres === 'yes') {
         if (employee.user_token !== null) {
-          console.log('notnull');
           this.deleteUser(employee);
         } else {
           this.deleteEmployee(employee);
@@ -94,16 +92,13 @@ export class EmployeeManagementComponent {
     let user: User;
     let userjson;
     this.authService.details(employee.user_token).subscribe(res => {
-      console.log(res);
       userjson = res['success'];
       setTimeout(() => {
         if (userjson !== undefined) {
-        console.log(userjson);
         const name = userjson['name']; const email = userjson['email']; const id = userjson['id'];
         user = { name, email, id } as User;
         setTimeout(() => {
-          this.authService.delete(user).subscribe(res => {
-            console.log(res);
+          this.authService.delete(user.id).subscribe(res => {
             this.deleteEmployee(employee);
           })
         }, 100);
@@ -112,7 +107,6 @@ export class EmployeeManagementComponent {
     });
   }
   deleteEmployee(employee) {
-    console.log(employee)
     let result: any;
     this.emplService.deleteEmployee(employee.id).subscribe(res => {
       result = res;

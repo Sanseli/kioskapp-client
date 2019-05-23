@@ -16,7 +16,6 @@ export class AuthService {
     }
 
     isAuthenticated(): boolean {
-        console.log(this.authentication);
         if (this.authentication !== undefined) {
             return true;
         } else {
@@ -48,10 +47,10 @@ export class AuthService {
         .pipe(catchError(this.handleError('reset', email)));
     }
 
-    delete(user: User): Observable<{}> {
+    delete(userid: number): Observable<{}> {
         return this.http
-        .delete(`api/user/delete/${user.id}`)
-        .pipe(catchError(this.handleError('delete', user)));
+        .delete(`api/user/delete/${userid}`)
+        .pipe(catchError(this.handleError('delete', userid)));
     }
 
     changePass(user: User): Observable<User> {

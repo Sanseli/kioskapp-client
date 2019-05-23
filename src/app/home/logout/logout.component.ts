@@ -31,7 +31,7 @@ export class LogoutComponent {
         const visitor = formValues.visitor;
         visitor.loggedIn = false;
 
-        console.log(this.visitorService.updateVisitor(visitor).subscribe(res => {
+        this.visitorService.updateVisitor(visitor).subscribe(res => {
             if (res['loggedIn'] === false) {
                 this.snackBar.open('Bedankt voor uw bezoek, u bent nu uitgelogd.', '', {
                     panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
@@ -46,7 +46,7 @@ export class LogoutComponent {
                 this.progress = false;
                 this.formValues.resetForm();
             }
-        }));
+        });
     }
 
     cancel() {

@@ -23,7 +23,6 @@ export class ManagementComponent {
 
         this.auth.login(user).subscribe((res) => {
             result = res['success']; 
-            console.log(result)
             if (result !== undefined) {
                 this.auth.authentication = result['token'];
                 this.router.navigate(['/management/appointments']);

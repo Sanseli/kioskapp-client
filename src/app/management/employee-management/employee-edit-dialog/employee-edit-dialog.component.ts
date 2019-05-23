@@ -38,15 +38,12 @@ export class EmployeeEditDialogComponent {
     if (this.employee.user_token !== null) {
       let userjson: any;
       this.authService.details(this.employee.user_token).subscribe(res => {
-        console.log(res);
         userjson = res['success'];
         setTimeout(() => {
           if (userjson !== undefined) {
-          console.log(userjson)
           let name = userjson['name']; let email = userjson['email']; let id = userjson['id'];
           this.user = { name, email, id } as User;
           this.userEdit = Object.assign({}, this.user);
-          console.log(this.userEdit);
           this.userexist = true;
           }
         }, 0);
@@ -54,20 +51,17 @@ export class EmployeeEditDialogComponent {
       });
 
     } else {
-      console.log('no user');
       this.userexist = false;
       this.loading = false;
     }
     this.employeeEdit = {name, firstname, email} as Employee;
-    console.log(this.employeeEdit);
   }
 
   onSubmit() {
-    this.progress = true;
-    console.log(this.del)
     if (this.cancel !== true) {
 
       if (this.del === false) {
+        this.progress = true;
 
         this.employee.name = this.employeeEdit.name;
         this.employee.firstname = this.employeeEdit.firstname;
@@ -75,14 +69,11 @@ export class EmployeeEditDialogComponent {
 
           if (this.newuser === true) {
             let result;
-            console.log("newuser")
             this.authService.register(this.userEdit)
               .subscribe(res => { 
                 result = res['success']; 
                 if (result !== undefined) {
-                  console.log('fksefkjsenf', result)
                   let token = result['token'];
-                  console.log(token);
                   this.employee.user_token = token;
 
                   setTimeout(() => {
@@ -90,8 +81,6 @@ export class EmployeeEditDialogComponent {
                   }, 300);
 
                   this.authService.details(result['token']).subscribe(res => {
-                    console.log(res);
-
                     this.snackBar.open('User is opgeslagen.', '',
                     { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
 
@@ -101,7 +90,6 @@ export class EmployeeEditDialogComponent {
                   });
 
                 } else {
-                  console.log('ksfkesfnkj')
                   this.snackBar.open('User is niet opgeslagen, controlleer het wachtwoord a.u.b.', '',
                     { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
                 }
@@ -118,7 +106,6 @@ export class EmployeeEditDialogComponent {
 
   updateEmployee() {
     this.service.updateEmployee(this.employee).subscribe((res) => {
-      console.log(res);
       this.snackBar.open('Uw wijzigingen zijn opgeslagen.', '',
       { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
       this.edit = false;
@@ -136,7 +123,6 @@ export class EmployeeEditDialogComponent {
   //   }
 
   //   this.authService.update(this.user).subscribe((res) => {
-  //     console.log(res)
   //   })
   // }
 
@@ -159,7 +145,6 @@ export class EmployeeEditDialogComponent {
     } else if (this.edit) {
       this.edit = false;
     }
-    console.log(this.edit);
   }
 
   close() {
@@ -177,8 +162,6 @@ export class EmployeeEditDialogComponent {
 
   editpass() {
     this.router.navigate['/management/reset'];
-    // this.editp = true;
-    // this.userEdit.password = '';
   }
 
   deleteUser() {
@@ -186,20 +169,35 @@ export class EmployeeEditDialogComponent {
     let dialogres = '';
 
     const dialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.data = { message: 'Weet u zeker dat u deze user wilt verwijderen?' };
-        const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { message: 'Weet u zeker dat u deze user wilt verwijderen?' };
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
-        dialogRef.afterClosed().subscribe(result => {
-            dialogres = `${result}`;
+    dialogRef.afterClosed().subscribe(result => {
+      dialogres = `${result}`;
 
-            if (dialogres === 'yes') {
-              this.authService.delete(this.user).subscribe((ref) => {console.log(ref)});
+      if (dialogres === 'yes') {
+        if (this.user.id !== undefined) {
+          this.progress = true;
+          this.authService.delete(this.user.id).subscribe((ref) => {
+            if (ref === 204) {
               this.userexist = false;
               this.newuser = false;
-              console.log("dosefhosief");
+              this.progress = false;
+              this.del = false;
+              this.snackBar.open('User is verwijderd', '',
+              { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+
+            } else {
+              this.snackBar.open('Verwijderen van user is mislukt, probeer opnieuw.', '',
+              { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
+              this.progress = false;
+              this.del = false;
             }
-        });
+          });
+        }
+      }
+    });
   }
 }

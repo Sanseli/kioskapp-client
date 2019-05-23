@@ -8,5 +8,4 @@ let express = require('express'),
     var port = process.env.PORT || 4000;
 
     var server = app.listen(function(){
-        console.log('Listening on port ' + port);
     });

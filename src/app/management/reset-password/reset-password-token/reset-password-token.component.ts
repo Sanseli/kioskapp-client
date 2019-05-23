@@ -26,15 +26,11 @@ export class ResetPasswordTokenComponent implements OnInit {
             { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
           this.router.navigate(['/management']);
         }
-        
-      })
+      });
     });
-
-    console.log(this.token);
   }
 
   onSubmit(formValues) {
-    console.log(formValues)
     if (formValues.password === formValues.c_password) {
       this.changePass(formValues.email, formValues.password, this.token);
       this.formValues.resetForm();
@@ -47,16 +43,10 @@ export class ResetPasswordTokenComponent implements OnInit {
   }
 
   changePass(email, password, token) {
-    console.log(email)
-    console.log(password)
-    console.log(token)
-
     const user = {email, password, token} as User;
 
-    this.auth.changePass(user).subscribe((res) => {console.log(res) 
-      console.log(res['id'])
+    this.auth.changePass(user).subscribe((res) => {
       if (res['id'] !== undefined) {
-        console.log('dkfhosef')
         this.snackBar.open('Wachtwoord is succesvol veranderd.', '',
         { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
         this.router.navigate(['/home']);

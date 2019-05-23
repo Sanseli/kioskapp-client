@@ -32,9 +32,7 @@ export class EmployeeDialogComponent {
 
   addEmployee(name: string,  email: string, firstname: string, ) {
     const newEmployee: Employee = {name, firstname, email} as Employee;
-    console.log(newEmployee);
     this.service.addEmployee(newEmployee).subscribe(res => {
-      console.log(res);
       if (res['id'] !== undefined) {
         this.snackBar.open('Nieuwe werknemer is opgeslagen.', '', {
           panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
@@ -46,9 +44,7 @@ export class EmployeeDialogComponent {
 
   addWOname(name: string, email: string) {
     const newEmployee: Employee = {name, email} as Employee;
-    console.log(newEmployee);
     this.service.addEmployee(newEmployee).subscribe(res => {
-      console.log(res);
       if (res['id'] !== undefined) {
         this.snackBar.open('Nieuwe werknemer is opgeslagen.', '', {
           panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'
@@ -59,49 +55,45 @@ export class EmployeeDialogComponent {
   }
 
   onCancel() {
-    console.log('cancel')
     this.cancel = true;
     this.dialogRef.close();
   }
 
   public changeListener(files: FileList){
-    console.log(files);
     if(files && files.length > 0) {
-      let file : File = files.item(0); 
-        console.log(file.name);
-        console.log(file.size);
-        console.log(file.type);
-        let reader: FileReader = new FileReader();
+      let file : File = files.item(0);
+      const last = file.name.substring((file.name.length - 3), file.name.length)
+
+      if (last === 'csv') {
+        const reader: FileReader = new FileReader();
         reader.readAsText(file);
 
         reader.onload = (e) => {
           let csv: string = reader.result as string;
           csv =  csv.replace(/\n/g, ';');
-          console.log(csv);
           let res = csv.split(';');
-          console.log(res)
           let i = 0;
-          console.log(res[res.length - 1])
           if (res[res.length - 1] === '') {
             res.splice(res.length - 1, 1)
           }
           for (let i = 0; i < res.length; i = i + 3) {
-            console.log(i)
-
             let name = res[i];
             let firstname = res[i + 1];
             let email = res[i + 2];
 
             let employee = {name, firstname, email} as Employee;
+
             this.employeelist.push(employee);
           }
 
-          console.log(this.employeelist);
-
           this.listData = new MatTableDataSource(this.employeelist);
           this.listFilled = true;
-        }
+        };
+      } else {
+        this.snackBar.open(`U kunt enkel een CSV bestand toevoegen.`, '',
+            { panelClass: ['blue-snackbar'], verticalPosition: 'top', horizontalPosition: 'center'});
       }
+    }
   }
 
   addList() {
@@ -112,7 +104,6 @@ export class EmployeeDialogComponent {
     for (let e = 0; e < last; e++) {
       this.service.addEmployee(this.employeelist[e]).subscribe(res => {
         if (res['id'] !== undefined) {
-          console.log(res)
           count++;
         }
         if (e === last - 1) {

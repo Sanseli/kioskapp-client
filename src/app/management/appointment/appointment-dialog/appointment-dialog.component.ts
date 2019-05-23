@@ -20,7 +20,6 @@ export class AppointmentDialogComponent implements OnInit {
         private dialogRef: MatDialogRef<AppointmentDialogComponent>,  @Inject(MAT_DIALOG_DATA) public data: any,
         private route: ActivatedRoute, private snackBar: MatSnackBar) {
             this.employees = data.comp.employees;
-            console.log();
         }
 
     ngOnInit(): void {
