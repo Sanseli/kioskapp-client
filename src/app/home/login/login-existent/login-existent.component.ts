@@ -13,7 +13,7 @@ export class LoginExistentComponent {
     visitors: Visitor[];
     progress = false;
 
-    @ViewChild('loginForm') formValues;
+    @ViewChild('loginForm', { static: true }) formValues;
 
     constructor(private visitorService: VisitorService, private router: Router, 
         private route: ActivatedRoute, private dialog: MatDialog, private snackBar: MatSnackBar) {

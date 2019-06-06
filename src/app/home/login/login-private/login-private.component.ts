@@ -19,7 +19,7 @@ export class LoginPrivateComponent {
   employees: Employee[];
   visitors: Visitor[] = [];
 
-  @ViewChild('loginForm') formValues;
+  @ViewChild('loginForm', { static: true }) formValues;
 
   constructor(private visitorService: VisitorService,
     private router: Router, private emplservice: EmployeeService, private route: ActivatedRoute,

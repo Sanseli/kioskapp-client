@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
-  @ViewChild('form') formValues;
+  @ViewChild('form', { static: true }) formValues;
   constructor(private auth: AuthService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {

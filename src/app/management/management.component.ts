@@ -13,7 +13,7 @@ export class ManagementComponent {
 
     constructor(private router: Router, private auth: AuthService, private snackBar: MatSnackBar) {}
 
-    @ViewChild('form') formValues; // Added this
+    @ViewChild('form', { static: true }) formValues; // Added this
 
     onSubmit(formValues) {
         const name = formValues.username; const password = formValues.password;

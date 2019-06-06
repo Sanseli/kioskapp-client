@@ -19,7 +19,7 @@ export class EmployeeManagementComponent {
   displayedColumns = ['name', 'firstname', 'email', 'actions'];
   searchKey: string;
 
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private emplService: EmployeeService, private router: Router,
     public dialog: MatDialog, private route: ActivatedRoute, private snackBar: MatSnackBar,

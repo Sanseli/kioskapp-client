@@ -41,7 +41,7 @@ export const appRoutes: Routes = [
     },
     {
         path: 'management',
-        loadChildren: './management/management.module#ManagementModule',
+        loadChildren: () => import('./management/management.module').then(m => m.ManagementModule),
     },
     {
         path: 'login/existent',

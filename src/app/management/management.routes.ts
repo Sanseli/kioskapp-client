@@ -12,13 +12,13 @@ export const managementRoutes = [
         path: 'appointments',
         component: AppointmentComponent,
         resolve: { visitorList: VisitorResolverService, employeeList: EmployeeResolverService },
-        //canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService]
     },
     {
         path: 'employee',
         component: EmployeeManagementComponent,
         resolve: { employeeList: EmployeeResolverService },
-        //canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService]
     },
     {
         path: 'reset',

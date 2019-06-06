@@ -20,7 +20,7 @@ export class LoginCompanyComponent {
   employees: Employee[];
   visitors: Visitor[] = [];
 
-  @ViewChild('loginForm') formValues;
+  @ViewChild('loginForm', { static: true }) formValues;
 
   constructor(private visitorService: VisitorService, private snackBar: MatSnackBar,
     private router: Router, private route: ActivatedRoute, public dialog: MatDialog,

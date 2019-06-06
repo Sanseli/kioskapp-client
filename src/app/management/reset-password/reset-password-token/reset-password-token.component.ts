@@ -10,7 +10,7 @@ import { MatSnackBar } from 'src/app/material';
 })
 export class ResetPasswordTokenComponent implements OnInit {
   token: any;
-  @ViewChild('form') formValues;
+  @ViewChild('form', { static: true }) formValues;
 
   constructor(private route: ActivatedRoute, private auth: AuthService, private snackBar: MatSnackBar,
     private router: Router) {}

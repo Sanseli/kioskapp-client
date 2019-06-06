@@ -16,7 +16,7 @@ export class LogoutComponent {
     visitors: Visitor[] = [];
     progress = false;
 
-    @ViewChild('logoutForm') formValues;
+    @ViewChild('logoutForm', { static: true }) formValues;
 
     constructor(private router: Router, private route: ActivatedRoute,
         private visitorService: VisitorService, private dialog: MatDialog,

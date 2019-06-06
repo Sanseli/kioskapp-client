@@ -31,7 +31,7 @@ export class AppointmentComponent {
     first: Date;
     last: Date;
 
-    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
 
     constructor(private router: Router, public dialog: MatDialog, private route: ActivatedRoute,
         private visitorService: VisitorService, private employeeService: EmployeeService,
