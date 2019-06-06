@@ -7,7 +7,6 @@ import { formatDate } from '@angular/common';
 import { MatSnackBar, MatDialog, MatDialogConfig } from '@angular/material';
 import { DialogComponent } from 'src/app/shared/dialog-component/dialog.component';
 import { EmailService } from 'src/app/shared/email.service';
-import { timingSafeEqual } from 'crypto';
 
 @Component ({
     templateUrl: 'login-company.component.html',
